@@ -24,7 +24,7 @@
 
 # Output directories
 **/Debug
-**/Test
+**/Release
 
 # Atmel Studio files
 *.atsuo
