@@ -17,9 +17,25 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 ******************************************************************************/
 
-#include "kernel.h"
+/** \file
+ * \brief Contains the parts of the kernel implemented in assembly.
+ * \see kernel_implementation
+ */
 
-int main()
-{  
-  while (1) {}  
-}
+ /** \cond */
+#define __SFR_OFFSET 0
+/** \endcond */
+
+#include "config.h"
+#include <avr/io.h>
+
+// external symbols from kernel.c
+.extern kn_canary_loc
+.extern kn_cur_thread
+.extern kn_cur_thread_mask
+.extern kn_disabled_threads
+.extern kn_suspended_threads
+.extern kn_delayed_threads
+.extern kn_stack
+
+  .section .text

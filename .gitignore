@@ -28,3 +28,7 @@
 
 # Atmel Studio files
 *.atsuo
+
+# Misc
+*.commit
+docs
