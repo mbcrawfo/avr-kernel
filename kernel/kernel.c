@@ -401,9 +401,49 @@ volatile static uint32_t kn_system_counter;
  * Local function declarations
  *****************************************************************************/
 
+/**
+ * \ingroup kernel_implementation
+ * 
+ * Test test
+ */
+extern void kn_thread_bootstrap();
+
 /******************************************************************************
  * Function definitions
  *****************************************************************************/
+
+bool kn_create_thread(const thread_id t_id, thread_ptr entry_point, 
+  const bool suspended, void* arg)
+{
+  if ((t_id >= MAX_THREADS) || !entry_point)
+  {
+    return false;
+  }
+  
+  // set the initial state of the thread's stack
+  // requires 25 bytes
+  kn_stack[t_id] = ((uint8_t*)pgm_read_word(&kn_stack_base[t_id])) - 25;
+  // 2 bytes for the entry point address
+  kn_stack[t_id][25] = ((uint16_t)entry_point) & 0x00FF;
+  kn_stack[t_id][24] = ((uint16_t)entry_point) >> 8;
+  // 2 bytes for arg
+  kn_stack[t_id][23] = ((uint16_t)arg) & 0x00FF;
+  kn_stack[t_id][22] = ((uint16_t)arg) >> 8;
+  // 1 byte for the thread id
+  kn_stack[t_id][21] = t_id;
+  // 2 bytes for the bootstrapper address
+  kn_stack[t_id][20] = ((uint16_t)kn_thread_bootstrap) & 0x00FF;
+  kn_stack[t_id][19] = ((uint16_t)kn_thread_bootstrap) >> 8;
+  // the remaining 18 bytes are popped to restore registers
+  // their value doesn't actually matter they just need to be on the stack
+  
+  if (t_id == kn_cur_thread)
+  {
+    // call scheduler
+  }
+  
+  return true;
+}
 
 uint8_t bit_to_mask(uint8_t bit_num)
 {
@@ -433,9 +473,7 @@ uint8_t bit_to_mask(uint8_t bit_num)
  * \warning If for any reason you try to manually call this function after 
  * \c main() has been called, you'll totally break your program...
  */
-__attribute__((naked))
-__attribute__((section(".init8")))
-__attribute__((used))
+__attribute__((naked, section(".init8"), used))
 static void kn_init()
 { 
   // initialize each thread's state

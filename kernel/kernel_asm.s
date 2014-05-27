@@ -22,7 +22,7 @@
  * \see kernel_implementation
  */
 
- /** \cond */
+/** \cond */
 #define __SFR_OFFSET 0
 /** \endcond */
 
@@ -39,3 +39,11 @@
 .extern kn_stack
 
   .section .text
+
+// void kn_thread_bootstrap()
+.global kn_thread_bootstrap
+kn_thread_bootstrap:
+  pop r24
+  pop r22
+  pop r23  
+  ret

@@ -28,6 +28,12 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#ifndef NULL
+  /** \cond */
+  #define NULL ((void*)0)
+  /** \endcond */
+#endif
+
 /**
  * \defgroup kernel_interface Kernel Interface
  * \brief Contains the public interface of the kernel.
@@ -54,6 +60,34 @@ typedef uint8_t thread_id;
 #define THREAD6 6
 /** The id for the eighth thread. */
 #define THREAD7 7
+
+/**
+ * The function type for threads used by the kernel.
+ * 
+ * \param[in] my_id The thread id of this thread.
+ * \param[in] arg A parameter to pass information to the thread.
+ * 
+ * \warning Do not allow any thread to return: doing so will break your program.
+ */
+typedef void (*thread_ptr)(const thread_id my_id, void* arg);
+
+/**
+ * Creates a new thread of operation within the kernel.
+ * 
+ * \param[in] t_id The id of the new thread. Must be a valid thread identifier. 
+ * If the thread id is an enabled thread, that thread will be replaced. If the 
+ * thread id matches the id of the calling thread, then this thread is replaced 
+ * and \c kn_create_thread() does not return.
+ * \param[in] entry_point The function that will be run as the new thread. Must 
+ * not be null.
+ * \param[in] suspended The initial state of the new thread. If true, the 
+ * thread will not run until it is manually resumed.
+ * \param[in] arg The parameter that will be passed to the function.
+ * 
+ * \return True if the thread was created successfully.
+ */
+extern bool kn_create_thread(const thread_id t_id, thread_ptr entry_point, 
+  const bool suspended, void* arg);
 
 /**
  * Converts a bit number to a bit mask.  For example, bit 0 produces the mask 
