@@ -38,15 +38,29 @@
  *****************************************************************************/
 
 /**
- * \ingroup kernel_implementation
- * The minimum usable size of each stack.
+ * The amount of space used when a stack is set up for a new thread.
+ * 
+ * Space requirements are: entry point address (2 bytes), thread parameters 
+ * (\ref thread_id and pointer; 3 bytes), bootstrap function address (2 bytes), 
+ * 18 callee save registers (18 bytes).  The callee save registers are 
+ * necessary because a thread is entered by returning from the scheduler in the 
+ * same manner as yielding.
+ * 
  * \see stack_size
+ * \ingroup kernel_interface
  */
-#define MIN_STACK_SIZE 20
+#define INITIAL_STACK_USAGE 25
 
 /**
- * \ingroup kernel_implementation
+ * The minimum size of each stack.
+ * \see stack_size
+ * \ingroup kernel_interface
+ */
+#define MIN_STACK_SIZE 32
+
+/**
  * The total size of the RAM available on the MCU.
+ * \ingroup kernel_implementation
  */
 #define TOTAL_RAM_SIZE (RAMEND - RAMSTART)
 
@@ -120,9 +134,9 @@
  *****************************************************************************/
 
 /** \def TOTAL_STACK_SIZE
- * \ingroup kernel_implementation
  * Sums up the total stack usage for all of the threads in the kernel.
  * \see stack_size
+ * \ingroup kernel_implementation
  */
 #if MAX_THREADS == 1
   #define TOTAL_STACK_SIZE THREAD0_STACK_SIZE
@@ -160,70 +174,70 @@
 #endif
 
 /**
- * \ingroup kernel_implementation
  * Sets the starting address of the stack for \ref THREAD0.
+ * \ingroup kernel_implementation
  */
 #define THREAD0_STACK_BASE ((uint8_t*)RAMEND)
 #if MAX_THREADS >= 2
   /**
-   * \ingroup kernel_implementation
    * Sets the starting address of the stack for \ref THREAD1.
+   * \ingroup kernel_implementation
    */
   #define THREAD1_STACK_BASE \
     ((uint8_t*)(THREAD0_STACK_BASE - THREAD0_STACK_SIZE))
 #endif
 #if MAX_THREADS >= 3
   /**
-   * \ingroup kernel_implementation
    * Sets the starting address of the stack for \ref THREAD2.
+   * \ingroup kernel_implementation
    */
   #define THREAD2_STACK_BASE \
     ((uint8_t*)(THREAD1_STACK_BASE - THREAD1_STACK_SIZE))
 #endif
 #if MAX_THREADS >= 4
   /**
-   * \ingroup kernel_implementation
    * Sets the starting address of the stack for \ref THREAD3.
+   * \ingroup kernel_implementation
    */
   #define THREAD3_STACK_BASE \
     ((uint8_t*)(THREAD2_STACK_BASE - THREAD2_STACK_SIZE))
 #endif
 #if MAX_THREADS >= 5
   /**
-   * \ingroup kernel_implementation
    * Sets the starting address of the stack for \ref THREAD4.
+   * \ingroup kernel_implementation
    */
   #define THREAD4_STACK_BASE \
     ((uint8_t*)(THREAD3_STACK_BASE - THREAD3_STACK_SIZE))
 #endif
 #if MAX_THREADS >= 6
   /**
-   * \ingroup kernel_implementation
    * Sets the starting address of the stack for \ref THREAD5.
+   * \ingroup kernel_implementation
    */
   #define THREAD5_STACK_BASE \
     ((uint8_t*)(THREAD4_STACK_BASE - THREAD4_STACK_SIZE))
 #endif
 #if MAX_THREADS >= 7
   /**
-   * \ingroup kernel_implementation
    * Sets the starting address of the stack for \ref THREAD6.
+   * \ingroup kernel_implementation
    */
   #define THREAD6_STACK_BASE \
     ((uint8_t*)(THREAD5_STACK_BASE - THREAD5_STACK_SIZE))
 #endif
 #if MAX_THREADS == 8
   /**
-   * \ingroup kernel_implementation
    * Sets the starting address of the stack for \ref THREAD7.
+   * \ingroup kernel_implementation
    */
   #define THREAD7_STACK_BASE \
     ((uint8_t*)(THREAD6_STACK_BASE - THREAD6_STACK_SIZE))
 #endif
 
 /**
- * \ingroup kernel_implementation
  * Contains pointers to the base of each stack for easier run time access.
+ * \ingroup kernel_implementation
  */
 static const uint8_t* const kn_stack_base[MAX_THREADS] PROGMEM = {
   THREAD0_STACK_BASE
@@ -252,72 +266,72 @@ static const uint8_t* const kn_stack_base[MAX_THREADS] PROGMEM = {
 
 #ifdef USE_STACK_CANARY
   /**
-   * \ingroup kernel_implementation
    * Sets pointer to the stack canary for \ref THREAD0.
+   * \ingroup kernel_implementation
    */
   #define THREAD0_CANARY_LOC \
     ((uint8_t*)(THREAD0_STACK_BASE - THREAD0_STACK_SIZE + 1))
   #if MAX_THREADS >= 2
     /**
-     * \ingroup kernel_implementation
      * Sets pointer to the stack canary for \ref THREAD1.
+     * \ingroup kernel_implementation
      */
     #define THREAD1_CANARY_LOC \
       ((uint8_t*)(THREAD1_STACK_BASE - THREAD1_STACK_SIZE + 1))
   #endif
   #if MAX_THREADS >= 3
     /**
-     * \ingroup kernel_implementation
      * Sets pointer to the stack canary for \ref THREAD2.
+     * \ingroup kernel_implementation
      */
     #define THREAD2_CANARY_LOC \
       ((uint8_t*)(THREAD2_STACK_BASE - THREAD2_STACK_SIZE + 1))
   #endif
   #if MAX_THREADS >= 4
     /**
-     * \ingroup kernel_implementation
      * Sets pointer to the stack canary for \ref THREAD3.
+     * \ingroup kernel_implementation
      */
     #define THREAD3_CANARY_LOC \
       ((uint8_t*)(THREAD3_STACK_BASE - THREAD3_STACK_SIZE + 1))
   #endif
   #if MAX_THREADS >= 5
     /**
-     * \ingroup kernel_implementation
      * Sets pointer to the stack canary for \ref THREAD4.
+     * \ingroup kernel_implementation
      */
     #define THREAD4_CANARY_LOC \
       ((uint8_t*)(THREAD4_STACK_BASE - THREAD4_STACK_SIZE + 1))
   #endif
   #if MAX_THREADS >= 6
     /**
-     * \ingroup kernel_implementation
      * Sets pointer to the stack canary for \ref THREAD5.
+     * \ingroup kernel_implementation
      */
     #define THREAD5_CANARY_LOC \
       ((uint8_t*)(THREAD5_STACK_BASE - THREAD5_STACK_SIZE + 1))
   #endif
   #if MAX_THREADS >= 7
     /**
-     * \ingroup kernel_implementation
      * Sets pointer to the stack canary for \ref THREAD6.
+     * \ingroup kernel_implementation
      */
     #define THREAD6_CANARY_LOC \
       ((uint8_t*)(THREAD6_STACK_BASE - THREAD6_STACK_SIZE + 1))
   #endif
   #if MAX_THREADS == 8
     /**
-     * \ingroup kernel_implementation
      * Sets pointer to the stack canary for \ref THREAD7.
+     * \ingroup kernel_implementation
      */
     #define THREAD7_CANARY_LOC \
       ((uint8_t*)(THREAD7_STACK_BASE - THREAD7_STACK_SIZE + 1))
   #endif
   
   /**
-   * \ingroup kernel_implementation
    * Contains pointers to each stack's canary location for easier run time 
    * access.
+   * \ingroup kernel_implementation
    */
   static const uint8_t* const kn_canary_loc[MAX_THREADS] PROGMEM = {
     THREAD0_CANARY_LOC
@@ -350,50 +364,50 @@ static const uint8_t* const kn_stack_base[MAX_THREADS] PROGMEM = {
  *****************************************************************************/
 
 /**
- * \ingroup kernel_implementation
  * Holds the id of the currently executing thread.
+ * \ingroup kernel_implementation
  */
 thread_id kn_cur_thread;
 
 /**
- * \ingroup kernel_implementation
  * Holds the mask of the currently executing thread.
+ * \ingroup kernel_implementation
  */
 uint8_t kn_cur_thread_mask;
 
 /**
- * \ingroup kernel_implementation
  * Tracks threads that are inactive.
+ * \ingroup kernel_implementation
  */
 uint8_t kn_disabled_threads;
 
 /**
- * \ingroup kernel_implementation
  * Tracks threads that have their execution suspended.
+ * \ingroup kernel_implementation
  */
 uint8_t kn_suspended_threads;
 
 /**
- * \ingroup kernel_implementation
  * Tracks threads that are delayed waiting for a timer.
+ * \ingroup kernel_implementation
  */
 volatile uint8_t kn_delayed_threads;
 
 /**
- * \ingroup kernel_implementation
  * Holds the saved stack locations for each thread.
+ * \ingroup kernel_implementation
  */
 uint8_t* kn_stack[MAX_THREADS];
 
 /**
- * \ingroup kernel_implementation
  * Tracks the delay times for each thread.
+ * \ingroup kernel_implementation
  */
 volatile static uint16_t kn_delay_counter[MAX_THREADS];
   
 /**
- * \ingroup kernel_implementation
  * Counts the total system uptime, in milliseconds.
+ * \ingroup kernel_implementation
  */
 volatile static uint32_t kn_system_counter;
 
@@ -402,9 +416,11 @@ volatile static uint32_t kn_system_counter;
  *****************************************************************************/
 
 /**
+ * Sets a thread up for initial entry by popping its parameters off of the 
+ * stack and loading them into the registers specified by the ABI of avr-gcc.
+ * \see thread_ptr
+ * \see kn_create_thread
  * \ingroup kernel_implementation
- * 
- * Test test
  */
 extern void kn_thread_bootstrap();
 
@@ -421,8 +437,8 @@ bool kn_create_thread(const thread_id t_id, thread_ptr entry_point,
   }
   
   // set the initial state of the thread's stack
-  // requires 25 bytes
-  kn_stack[t_id] = ((uint8_t*)pgm_read_word(&kn_stack_base[t_id])) - 25;
+  kn_stack[t_id] = ((uint8_t*)pgm_read_word(&kn_stack_base[t_id])) -
+    INITIAL_STACK_USAGE;  
   // 2 bytes for the entry point address
   kn_stack[t_id][25] = ((uint16_t)entry_point) & 0x00FF;
   kn_stack[t_id][24] = ((uint16_t)entry_point) >> 8;
@@ -459,8 +475,6 @@ uint8_t bit_to_mask(uint8_t bit_num)
  *****************************************************************************/
 
 /**
- * \ingroup kernel_implementation
- * 
  * Provides initialization of the kernel. Is automatically called in the .init8 
  * section, just before \c main() is called. When the program enters \c main() 
  * the kernel is running with only \ref THREAD0 active. The user must enable 
@@ -472,6 +486,8 @@ uint8_t bit_to_mask(uint8_t bit_num)
  * 
  * \warning If for any reason you try to manually call this function after 
  * \c main() has been called, you'll totally break your program...
+ * 
+ * \ingroup kernel_implementation
  */
 __attribute__((naked, section(".init8"), used))
 static void kn_init()

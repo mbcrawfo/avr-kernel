@@ -76,12 +76,11 @@
  * .data and .bss segments, as well as the heap size if you intend to use 
  * dynamic allocation.
  * 
- * The absolute minimum stack size is 20 bytes; this much space is necessary 
- * for a thread to be created, and to yield without overflowing assuming that 
- * there is no stack usage within the thread itself.  If you pass parameters to 
- * your threads when they are created, then the size of those parameters must 
- * be added to the minimum stack size.  To do anything useful you probably want 
- * to keep stack sizes to a minimum of about 32 bytes.
+ * The absolute minimum stack size is 25 bytes (\ref INITIAL_STACK_USAGE); this 
+ * much space is necessary for a thread to be created, and to yield without 
+ * overflowing assuming that there is no stack usage within the thread itself.  
+ * To do anything useful, however, a minimum stack size of 32 bytes 
+ * (\ref MIN_STACK_SIZE) is enforced.
  * 
  * \warning If stack canaries are enabled, they reduce the usable size of each 
  * thread's stack by 1 byte.
