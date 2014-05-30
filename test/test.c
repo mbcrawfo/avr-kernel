@@ -19,12 +19,13 @@
 
 #include "kernel.h"
 
-void threadA(const thread_id my_id, void* arg) __attribute__ ((noreturn));
-void threadB(const thread_id my_id, void* arg) __attribute__ ((noreturn));
+void threadA(const thread_id my_id, void* arg) __attribute__((OS_task, noreturn));
+void threadB(const thread_id my_id, void* arg) __attribute__((OS_task, noreturn));
 
+int main() __attribute__((OS_main));
 int main()
 {
-  kn_create_thread(THREAD0, &threadA, false, (void*)0x1234);
+  kn_create_thread(THREAD1, &threadA, false, (void*)0x1234);
   kn_create_thread(THREAD2, &threadB, false, NULL);
   
   while (1) {}  

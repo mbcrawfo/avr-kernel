@@ -62,7 +62,9 @@ typedef uint8_t thread_id;
 #define THREAD7 7
 
 /**
- * The function type for threads used by the kernel.
+ * The function type for threads used by the kernel.  To reduce code size, 
+ * thread functions should be given the gcc attributes \c OS_task and 
+ * \c noreturn.
  * 
  * \param[in] my_id The thread id of this thread.
  * \param[in] arg A parameter to pass information to the thread.
@@ -75,9 +77,7 @@ typedef void (*thread_ptr)(const thread_id my_id, void* arg);
  * Creates a new thread of operation within the kernel.
  * 
  * \param[in] t_id The id of the new thread. Must be a valid thread identifier. 
- * If the thread id is an enabled thread, that thread will be replaced. If the 
- * thread id matches the id of the calling thread, then this thread is replaced 
- * and \c kn_create_thread() does not return.
+ * If the thread id is an enabled thread, that thread will be replaced.
  * \param[in] entry_point The function that will be run as the new thread. Must 
  * not be null.
  * \param[in] suspended The initial state of the new thread. If true, the 
@@ -85,6 +85,9 @@ typedef void (*thread_ptr)(const thread_id my_id, void* arg);
  * \param[in] arg The parameter that will be passed to the function.
  * 
  * \return True if the thread was created successfully.
+ * 
+ * \warning If t_id is the currently active thread, this function does not 
+ * return.
  */
 extern bool kn_create_thread(const thread_id t_id, thread_ptr entry_point, 
   const bool suspended, void* arg);
@@ -101,7 +104,7 @@ extern bool kn_create_thread(const thread_id t_id, thread_ptr entry_point,
  * \return The bit mask corresponding to \c bit_num. If \c bit_num is invalid, 
  * 0 is returned.
  */
-extern uint8_t bit_to_mask(uint8_t bit_num);
+extern uint8_t bit_to_mask(uint8_t bit_num) __attribute__((pure));
 
 /**
  * @}
