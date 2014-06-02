@@ -41,22 +41,9 @@
  *****************************************************************************/
 
 /**
- * The amount of space used when a stack is set up for a new thread.
- * 
- * Space requirements are: entry point address (2 bytes), thread parameters 
- * (\ref thread_id and pointer; 3 bytes), bootstrap function address (2 bytes), 
- * 18 callee save registers (18 bytes).  The callee save registers are 
- * necessary because a thread is entered by returning from the scheduler in the 
- * same manner as yielding.
- * 
- * \see stack_size
- */
-#define INITIAL_STACK_USAGE 25
-
-/**
  * Contains pointers to the base of each stack for easier run time access.
  */
-static const uint8_t* const kn_stack_base[MAX_THREADS] PROGMEM = {
+const uint8_t* const kn_stack_base[MAX_THREADS] PROGMEM = {
   THREAD0_STACK_BASE
   #if MAX_THREADS >= 2
     , THREAD1_STACK_BASE
@@ -151,7 +138,7 @@ static volatile uint32_t kn_system_counter;
  * \see thread_ptr
  * \see kn_create_thread
  */
-extern void kn_thread_bootstrap();
+extern void kn_thread_bootstrap() __attribute__((naked));
 
 /**
  * See \ref kn_create_thread for the behavior of this function.  
@@ -172,7 +159,7 @@ extern bool kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point,
 bool kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point, 
   const bool suspended, void* arg)
 {
-  if ((t_id >= MAX_THREADS) || !entry_point)
+  if (!entry_point)
   {
     return false;
   }

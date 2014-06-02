@@ -36,10 +36,18 @@
 #define MIN_STACK_SIZE 32
 
 /**
- * The size of the kernel stack used for interrupts and some kernel functions.
- * \ingroup kernel_implementation
+ * The amount of space used when a stack is set up for a new thread.
+ * 
+ * Space requirements are: entry point address (2 bytes), thread parameters 
+ * (\ref thread_id and pointer; 3 bytes), bootstrap function address (2 bytes), 
+ * 18 callee save registers (18 bytes).  The callee save registers are 
+ * necessary because a thread is entered by returning from the scheduler in the 
+ * same manner as yielding.
+ * 
+ * \see stack_size
+ * \ingroup kernel_interface
  */
-#define KERNEL_STACK_SIZE 32
+#define INITIAL_STACK_USAGE 25
 
 /**
  * The total size of the RAM available on the MCU.
@@ -116,46 +124,40 @@
  * Stack definitions
  *****************************************************************************/
 
-/** \def USER_STACK_SIZE
+/** \def TOTAL_STACK_SIZE
  * Sums up the total stack usage for all of the user threads.
  * \see stack_size
  * \ingroup kernel_implementation
  */
 #if MAX_THREADS == 1
-  #define USER_STACK_SIZE THREAD0_STACK_SIZE
+  #define TOTAL_STACK_SIZE THREAD0_STACK_SIZE
 #elif MAX_THREADS == 2
-  #define USER_STACK_SIZE (THREAD0_STACK_SIZE + THREAD1_STACK_SIZE)
+  #define TOTAL_STACK_SIZE (THREAD0_STACK_SIZE + THREAD1_STACK_SIZE)
 #elif MAX_THREADS == 3
-  #define USER_STACK_SIZE (THREAD0_STACK_SIZE + THREAD1_STACK_SIZE \
+  #define TOTAL_STACK_SIZE (THREAD0_STACK_SIZE + THREAD1_STACK_SIZE \
     THREAD2_STACK_SIZE)
 #elif MAX_THREADS == 4
-  #define USER_STACK_SIZE (THREAD0_STACK_SIZE + THREAD1_STACK_SIZE + \
+  #define TOTAL_STACK_SIZE (THREAD0_STACK_SIZE + THREAD1_STACK_SIZE + \
     THREAD2_STACK_SIZE + THREAD3_STACK_SIZE)
 #elif MAX_THREADS == 5
-  #define USER_STACK_SIZE (THREAD0_STACK_SIZE + THREAD1_STACK_SIZE + \
+  #define TOTAL_STACK_SIZE (THREAD0_STACK_SIZE + THREAD1_STACK_SIZE + \
     THREAD2_STACK_SIZE + THREAD3_STACK_SIZE + THREAD4_STACK_SIZE)
 #elif MAX_THREADS == 6
-  #define USER_STACK_SIZE (THREAD0_STACK_SIZE + THREAD1_STACK_SIZE + \
+  #define TOTAL_STACK_SIZE (THREAD0_STACK_SIZE + THREAD1_STACK_SIZE + \
     THREAD2_STACK_SIZE + THREAD3_STACK_SIZE + THREAD4_STACK_SIZE + \
     THREAD5_STACK_SIZE)
 #elif MAX_THREADS == 7
-  #define USER_STACK_SIZE (THREAD0_STACK_SIZE + THREAD1_STACK_SIZE + \
+  #define TOTAL_STACK_SIZE (THREAD0_STACK_SIZE + THREAD1_STACK_SIZE + \
     THREAD2_STACK_SIZE + THREAD3_STACK_SIZE + THREAD4_STACK_SIZE + \
     THREAD5_STACK_SIZE + THREAD6_STACK_SIZE)
 #elif MAX_THREADS == 8
-  #define USER_STACK_SIZE (THREAD0_STACK_SIZE + THREAD1_STACK_SIZE + \
+  #define TOTAL_STACK_SIZE (THREAD0_STACK_SIZE + THREAD1_STACK_SIZE + \
     THREAD2_STACK_SIZE + THREAD3_STACK_SIZE + THREAD4_STACK_SIZE + \
     THREAD5_STACK_SIZE + THREAD6_STACK_SIZE + THREAD7_STACK_SIZE)
 #else
   // why is this happening??
   #error "Invalid number of threads"
 #endif
-
-/**
- * Sums the total stack size used by the kernel and user threads.
- * \ingroup kernel_implementation
- */
-#define TOTAL_STACK_SIZE (KERNEL_STACK_SIZE + USER_STACK_SIZE)
 
 // check the stack size
 #if TOTAL_STACK_SIZE >= TOTAL_RAM_SIZE
@@ -174,16 +176,10 @@
 #endif
 
 /**
- * Sets the starting address of the kernel stack.
- * \ingroup kernel_implementation
- */
-#define KERNEL_STACK_BASE STACK_CAST(RAMEND)
-
-/**
  * Sets the starting address of the stack for \ref THREAD0.
  * \ingroup kernel_implementation
  */
-#define THREAD0_STACK_BASE STACK_CAST(KERNEL_STACK_BASE - KERNEL_STACK_SIZE)
+#define THREAD0_STACK_BASE STACK_CAST(RAMEND)
 #if MAX_THREADS >= 2
   /**
    * Sets the starting address of the stack for \ref THREAD1.
