@@ -138,7 +138,7 @@ static volatile uint32_t kn_system_counter;
  * \see thread_ptr
  * \see kn_create_thread
  */
-extern void kn_thread_bootstrap() __attribute__((naked));
+extern void kn_thread_bootstrap();
 
 /**
  * See \ref kn_create_thread for the behavior of this function.  
