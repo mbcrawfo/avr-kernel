@@ -259,11 +259,6 @@ void kn_init()
   
   // sleep mode idle, sleep disabled
   SMCR = 0;
-  
-  // not in kernel mode, nor kernel interrupt
-  GPIOR0 = 0;
-  GPIOR1 = 0;
-  GPIOR2 = 0;
 }
 
 /**
