@@ -45,17 +45,19 @@
  // bool kn_create_thread(const thread_id t_id, thread_ptr entry_point, 
  //   const bool suspended, void* arg)
  // see documentation in kernel.h
- // wraps kn_create_thread_impl (see kernel.c), calling it in kernel mode
+ // wraps kn_create_thread_impl (see kernel.c)
+ // If the calling thread is replacing itself, sets up the stack so that stack 
+ // corruption is avoided
 .global kn_create_thread
 kn_create_thread:
   // r24, r22/23, r20, r18/19 hold the params
   // validate the thread id
   cpi r24, MAX_THREADS
-  brsh .knct_bad_tid
+  brsh .bad_tid
   // see if we are replacing the current thread
   lds r26, kn_cur_thread
   cp r26, r24
-  brne .knct_call_impl
+  brne .call_impl
   // if yes, load the stack base
   ldi r30, pm_hi8(kn_stack_base)
   ldi r31, pm_lo8(kn_stack_base)
@@ -72,14 +74,13 @@ kn_create_thread:
   out SPL, r27
   out SREG, r0
   // end atomic block
-.knct_call_impl:
+.call_impl:
   call kn_create_thread_impl
   ret
-.knct_bad_tid:
+.bad_tid:
   // return false
   clr r24
   ret
-
 
 // void kn_thread_bootstrap()
 // see documentation in kernel.c

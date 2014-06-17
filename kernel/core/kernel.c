@@ -28,6 +28,7 @@
 #include <avr/io.h>
 #include <avr/pgmspace.h>
 #include <util/atomic.h>
+#include <avr/interrupt.h>
 
 /**
  * \defgroup kernel_implementation Kernel Implementation
@@ -142,9 +143,8 @@ extern void kn_thread_bootstrap();
 
 /**
  * See \ref kn_create_thread for the behavior of this function.  
- * \ref kn_create_thread is a wrapper implemented in assembly that switches to 
- * kernel mode, calls this function, and switches back to user mode before 
- * returning to the calling thread.
+ * \ref kn_create_thread is a wrapper implemented that sets up the stack to 
+ * avoid stack corruption when a thread replaces itself.
  * 
  * \warning As with \ref kn_create_thread, this function does not return if 
  * \c t_id is the currently active thread.
@@ -153,7 +153,7 @@ extern bool kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point,
   const bool suspended, void* arg);
 
 /******************************************************************************
- * Function definitions
+ * Local function definitions
  *****************************************************************************/
 
 bool kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point, 
@@ -200,6 +200,10 @@ bool kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point,
   
   return true;
 }
+
+/******************************************************************************
+ * External function definitions
+ *****************************************************************************/
 
 uint8_t bit_to_mask(uint8_t bit_num)
 {
