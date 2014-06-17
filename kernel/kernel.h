@@ -62,9 +62,12 @@ typedef uint8_t thread_id;
 #define THREAD7 7
 
 /**
- * The function type for threads used by the kernel.  To reduce code size, 
- * thread functions should be given the gcc attributes \c OS_task and 
- * \c noreturn.
+ * The function type for threads used by the kernel.  To reduce code size and 
+ * unnecessary stack usage, thread functions should be given the gcc attributes 
+ * \c OS_task and \c noreturn. While thread functions do not need to worry 
+ * about saving or restoring any registers, it is not recommended to give them 
+ * the \c naked attribute, because the compiler may generate code that assumes 
+ * a prologue has set up the stack.
  * 
  * \param[in] my_id The thread id of this thread.
  * \param[in] arg A parameter to pass information to the thread.
@@ -91,6 +94,12 @@ typedef void (*thread_ptr)(const thread_id my_id, void* arg);
  */
 extern bool kn_create_thread(const thread_id t_id, thread_ptr entry_point, 
   const bool suspended, void* arg);
+  
+/**
+ * Allows a thread to yield execution to the scheduler.  Will return when the 
+ * scheduler selects the calling thread for execution again.
+ */
+extern void kn_yield();
 
 /**
  * Converts a bit number to a bit mask.  For example, bit 0 produces the mask 

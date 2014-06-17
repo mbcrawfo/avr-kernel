@@ -129,7 +129,7 @@ static volatile uint16_t kn_delay_counter[MAX_THREADS];
 static volatile uint32_t kn_system_counter;
 
 /******************************************************************************
- * Local function declarations
+ * External assembly functions
  *****************************************************************************/
 
 /**
@@ -140,6 +140,17 @@ static volatile uint32_t kn_system_counter;
  * \see kn_create_thread
  */
 extern void kn_thread_bootstrap();
+
+/**
+ * Enters the scheduler without saving the state of the calling thread. Does 
+ * not return. Should only be used when a thread has been disabled or it is 
+ * being replaced.
+ */
+extern void kn_scheduler();
+
+/******************************************************************************
+ * Local function declarations
+ *****************************************************************************/
 
 /**
  * See \ref kn_create_thread for the behavior of this function.  
@@ -195,7 +206,7 @@ bool kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point,
   
   if (t_id == kn_cur_thread)
   {
-    //TODO: call scheduler
+    kn_scheduler();
   }
   
   return true;

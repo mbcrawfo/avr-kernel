@@ -18,6 +18,7 @@
 ******************************************************************************/
 
 #include "kernel.h"
+#include <avr/io.h>
 
 void threadA(const thread_id my_id, void* arg) __attribute__((OS_task, noreturn));
 void threadB(const thread_id my_id, void* arg) __attribute__((OS_task, noreturn));
@@ -28,15 +29,26 @@ int main()
   kn_create_thread(THREAD1, &threadA, false, (void*)0x1234);
   kn_create_thread(THREAD2, &threadB, false, NULL);
   
-  while (1) {}  
+  while (1)
+  {
+    kn_yield();
+  }  
 }
 
 void threadA(const thread_id my_id, void* arg)
 {
-  while (1) {}
+  uint8_t derp = my_id + 1;
+  while (1)
+  {
+    PORTB = derp;
+    kn_yield();
+  }
 }
 
 void threadB(const thread_id my_id, void* arg)
 {
-  while (1) {}
+  while (1)
+  {
+    kn_yield();
+  }
 }
