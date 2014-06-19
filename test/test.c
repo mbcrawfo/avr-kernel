@@ -20,19 +20,17 @@
 #include "kernel.h"
 #include <avr/io.h>
 
-void threadA(const thread_id my_id, void* arg) __attribute__((OS_task, noreturn));
-void threadB(const thread_id my_id, void* arg) __attribute__((OS_task, noreturn));
+void threadA(const thread_id my_id, void* arg) 
+  __attribute__((OS_task, noreturn));
+void threadB(const thread_id my_id, void* arg) 
+  __attribute__((OS_task, noreturn));
 
-int main() __attribute__((OS_main));
-int main()
+#pragma GCC diagnostic ignored "-Wmain"
+void main() __attribute__((OS_main));
+void main()
 {
-  kn_create_thread(THREAD1, &threadA, false, (void*)0x1234);
   kn_create_thread(THREAD2, &threadB, false, NULL);
-  
-  while (1)
-  {
-    kn_yield();
-  }  
+  kn_replace_self(&threadA, false, NULL);
 }
 
 void threadA(const thread_id my_id, void* arg)

@@ -93,7 +93,18 @@ typedef void (*thread_ptr)(const thread_id my_id, void* arg);
  * return.
  */
 extern bool kn_create_thread(const thread_id t_id, thread_ptr entry_point, 
-  const bool suspended, void* arg);
+                             const bool suspended, void* arg);
+/**
+ * Replaces the calling thread with a new thread. Basically is just a wrapper 
+ * for the \ref kn_create_thread that automatically supplies the id of the 
+ * calling thread. See \ref kn_create_thread for behavior and parameter info.
+ * 
+ * This function never returns.
+ * 
+ * \see kn_create_thread
+ */
+extern bool kn_replace_self(thread_ptr entry_point, const bool suspended,
+                            void* arg);
   
 /**
  * Allows a thread to yield execution to the scheduler.  Will return when the 

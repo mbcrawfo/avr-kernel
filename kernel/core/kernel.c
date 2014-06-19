@@ -161,14 +161,14 @@ extern void kn_scheduler();
  * \c t_id is the currently active thread.
  */
 extern bool kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point,
-  const bool suspended, void* arg);
+                                  const bool suspended, void* arg);
 
 /******************************************************************************
  * Local function definitions
  *****************************************************************************/
 
 bool kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point, 
-  const bool suspended, void* arg)
+                           const bool suspended, void* arg)
 {
   if (!entry_point)
   {
@@ -215,6 +215,11 @@ bool kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point,
 /******************************************************************************
  * External function definitions
  *****************************************************************************/
+
+bool kn_replace_self(thread_ptr entry_point, const bool suspended, void* arg)
+{
+  return kn_create_thread(kn_cur_thread, entry_point, suspended, arg);
+}
 
 uint8_t bit_to_mask(uint8_t bit_num)
 {
