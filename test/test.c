@@ -19,18 +19,20 @@
 
 #include "kernel.h"
 #include <avr/io.h>
+#include <avr/interrupt.h>
 
 void threadA(const thread_id my_id, void* arg) 
-  __attribute__((OS_task, noreturn));
+  __attribute__((OS_task));
 void threadB(const thread_id my_id, void* arg) 
-  __attribute__((OS_task, noreturn));
+  __attribute__((OS_task));
 
 #pragma GCC diagnostic ignored "-Wmain"
 void main() __attribute__((OS_main));
 void main()
 {
-  kn_create_thread(THREAD2, &threadB, false, NULL);
-  kn_replace_self(&threadA, false, NULL);
+  sei();
+  kn_create_thread(THREAD2, &threadA, false, NULL);
+  kn_disable_self();
 }
 
 void threadA(const thread_id my_id, void* arg)
@@ -38,7 +40,7 @@ void threadA(const thread_id my_id, void* arg)
   uint8_t derp = my_id + 1;
   while (1)
   {
-    PORTB = derp;
+    PORTB = kn_current_thread();
     kn_yield();
   }
 }

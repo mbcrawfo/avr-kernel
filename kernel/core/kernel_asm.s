@@ -36,7 +36,7 @@
 .extern kn_cur_thread_mask
 .extern kn_disabled_threads
 .extern kn_suspended_threads
-.extern kn_delayed_threads
+.extern kn_sleeping_threads
 .extern kn_stack
 
   .section .text
@@ -158,7 +158,7 @@ kn_scheduler:
   // refresh the status masks, or them into a single mask
   lds r26, kn_disabled_threads
   lds r27, kn_suspended_threads
-  lds r28, kn_delayed_threads
+  lds r28, kn_sleeping_threads
   or r26, r27
   or r26, r28
 .scheduler_loop:

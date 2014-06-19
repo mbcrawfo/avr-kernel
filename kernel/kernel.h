@@ -89,7 +89,7 @@ typedef void (*thread_ptr)(const thread_id my_id, void* arg);
  * 
  * \return True if the thread was created successfully.
  * 
- * \warning If t_id is the currently active thread, this function does not 
+ * \warning If \c t_id is the currently active thread, this function does not 
  * return.
  */
 extern bool kn_create_thread(const thread_id t_id, thread_ptr entry_point, 
@@ -99,8 +99,7 @@ extern bool kn_create_thread(const thread_id t_id, thread_ptr entry_point,
  * for the \ref kn_create_thread that automatically supplies the id of the 
  * calling thread. See \ref kn_create_thread for behavior and parameter info.
  * 
- * This function never returns.
- * 
+ * \warning This thread does not return.
  * \see kn_create_thread
  */
 extern bool kn_replace_self(thread_ptr entry_point, const bool suspended,
@@ -113,6 +112,66 @@ extern bool kn_replace_self(thread_ptr entry_point, const bool suspended,
 extern void kn_yield();
 
 /**
+ * Returns the id of the currently running thread.
+ */
+static inline thread_id kn_current_thread();
+
+/**
+ * Returns true if the specified thread is currently enabled. This does not 
+ * necessarily mean that the thread is currently active, as it may be 
+ * suspended or sleeping.
+ */
+static inline bool kn_thread_enabled(const thread_id t_id);
+
+/**
+ * Returns true if the specified thread is enabled, but suspended.
+ */
+static inline bool kn_thread_suspended(const thread_id t_id);
+
+/**
+ * Returns true if the specified thread is enabled, but currently sleeping.
+ */
+static inline bool kn_thread_sleeping(const thread_id t_id);
+
+/**
+ * Disables the specified thread. If \c t_id is invalid, does nothing. After a 
+ * thread has been disable, you must call \ref kn_create_thread to restart it 
+ * or replace it with a new thread. If you wish to "pause" a thread with the 
+ * ability to resume it at a later time, use \ref kn_suspend.
+ * 
+ * \warning If kn_disable is the calling thread, this function does not return.
+ */
+static inline void kn_disable(const thread_id t_id);
+
+/**
+ * Disables the calling thread.
+ * 
+ * \warning Does not return.
+ * \see kn_disable
+ */
+static inline void kn_disable_self();
+
+/**
+ * Resumes the specified thread, so that the scheduler may select it for 
+ * execution. If \c t_id is invalid, does nothing.
+ */
+static inline void kn_resume(const thread_id t_id);
+
+/**
+ * Suspends the specified thread. If \c t_id is invalid, does nothing. If 
+ * \c t_id is the calling thread, this function yields and will return after 
+ * the thread has been resumed and selected for execution again.
+ */
+static inline void kn_suspend(const thread_id t_id);
+
+/**
+ * Suspends the calling thread.
+ * 
+ * \see kn_suspend
+ */
+static inline void kn_suspend_self();
+
+/**
  * Converts a bit number to a bit mask.  For example, bit 0 produces the mask 
  * 0x01.  Implemented using a lookup table for better performance than a loop 
  * with bitwise operations. Technically this function isn't part of the kernel, 
@@ -121,13 +180,15 @@ extern void kn_yield();
  * \param[in] bit_num The bit number to be converted to a mask. Zero-indexed. 
  * Valid values are in the range [0,7].
  * 
- * \return The bit mask corresponding to \c bit_num. If \c bit_num is invalid, 
- * 0 is returned.
+ * \return The bit mask corresponding to \c bit_num.
  */
-extern uint8_t bit_to_mask(uint8_t bit_num) __attribute__((pure));
+static inline uint8_t bit_to_mask(uint8_t bit_num) __attribute__((pure));
 
 /**
  * @}
  */
+
+// inline functions definitions
+#include "core/kernel-inl.h"
 
 #endif

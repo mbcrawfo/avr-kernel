@@ -31,7 +31,7 @@
 /**
  * The minimum size of each stack.
  * \see stack_size
- * \ingroup kernel_interface
+ * \ingroup kernel_implementation
  */
 #define MIN_STACK_SIZE 32
 
@@ -45,7 +45,7 @@
  * same manner as yielding.
  * 
  * \see stack_size
- * \ingroup kernel_interface
+ * \ingroup kernel_implementation
  */
 #define INITIAL_STACK_USAGE 25
 

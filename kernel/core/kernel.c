@@ -37,6 +37,13 @@
  * @{
  */
 
+/**
+ * Bitmasks used for converting a thread id to a thread mask.
+ */
+const uint8_t kn_bitmasks[8] PROGMEM = {
+  0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80
+};
+
 /******************************************************************************
  * Local stack info
  *****************************************************************************/
@@ -116,17 +123,17 @@ uint8_t kn_disabled_threads;
 /** Tracks threads that have their execution suspended. */
 uint8_t kn_suspended_threads;
 
-/** Tracks threads that are delayed waiting for a timer. */
-volatile uint8_t kn_delayed_threads;
+/** Tracks threads that are sleeping for some time. */
+volatile uint8_t kn_sleeping_threads;
 
 /** Holds the saved stack locations for each thread. */
 uint8_t* kn_stack[MAX_THREADS];
 
-/** Tracks the delay times for each thread. */
-static volatile uint16_t kn_delay_counter[MAX_THREADS];
+/** Tracks the sleep times for each thread. */
+static volatile uint16_t kn_sleep_counter[MAX_THREADS];
   
 /** Counts the total system uptime, in milliseconds. */
-static volatile uint32_t kn_system_counter;
+volatile uint32_t kn_system_counter;
 
 /******************************************************************************
  * External assembly functions
@@ -199,10 +206,10 @@ bool kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point,
   // update kernel state for the new thread
   uint8_t mask = bit_to_mask(t_id);
   kn_disabled_threads &= ~mask;
-  kn_delayed_threads &= ~mask;
+  kn_sleeping_threads &= ~mask;
   kn_suspended_threads = 
     suspended ? (kn_suspended_threads | mask) : (kn_suspended_threads & ~mask);
-  kn_delay_counter[t_id] = 0;
+  kn_sleep_counter[t_id] = 0;
   
   if (t_id == kn_cur_thread)
   {
@@ -219,15 +226,6 @@ bool kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point,
 bool kn_replace_self(thread_ptr entry_point, const bool suspended, void* arg)
 {
   return kn_create_thread(kn_cur_thread, entry_point, suspended, arg);
-}
-
-uint8_t bit_to_mask(uint8_t bit_num)
-{
-  static const uint8_t bitmasks[] PROGMEM = { 
-    0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80
-  };
-  
-  return bit_num < 8 ? pgm_read_byte(&bitmasks[bit_num]) : 0;
 }
 
 /******************************************************************************
@@ -254,7 +252,7 @@ void kn_init()
   for (uint8_t i = 0; i < MAX_THREADS; i++)
   {
     kn_stack[i] = (uint8_t*)pgm_read_word(&kn_stack_base[i]);
-    kn_delay_counter[i] = 0;
+    kn_sleep_counter[i] = 0;
 
 #ifdef USE_STACK_CANARY
     uint8_t* canary = (uint8_t*)pgm_read_word(&kn_canary_loc[i]);
@@ -270,7 +268,7 @@ void kn_init()
   // no threads suspended
   kn_suspended_threads = 0x00;
   // no threads delayed
-  kn_delayed_threads = 0x00;
+  kn_sleeping_threads = 0x00;
   // set the stack for THREAD0
   SP = (uint16_t)kn_stack[THREAD0];
   
