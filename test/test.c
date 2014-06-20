@@ -32,7 +32,7 @@ void main()
 {
   sei();
   kn_create_thread(THREAD2, &threadA, false, NULL);
-  kn_disable_self();
+  kn_replace_self(&threadB, kn_thread_suspended(THREAD2), NULL);
 }
 
 void threadA(const thread_id my_id, void* arg)
@@ -40,7 +40,7 @@ void threadA(const thread_id my_id, void* arg)
   uint8_t derp = my_id + 1;
   while (1)
   {
-    PORTB = kn_current_thread();
+    PORTB = kn_thread_suspended(my_id);
     kn_yield();
   }
 }

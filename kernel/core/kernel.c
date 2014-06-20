@@ -223,9 +223,74 @@ bool kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point,
  * External function definitions
  *****************************************************************************/
 
-bool kn_replace_self(thread_ptr entry_point, const bool suspended, void* arg)
+bool kn_thread_enabled(const thread_id t_id)
 {
-  return kn_create_thread(kn_cur_thread, entry_point, suspended, arg);
+  if (t_id < MAX_THREADS)
+  {
+    return (kn_disabled_threads & bit_to_mask(t_id)) == 0;
+  }
+  
+  return false;
+}
+
+bool kn_thread_suspended(const thread_id t_id)
+{ 
+  if (t_id < MAX_THREADS)
+  {
+    uint8_t mask = bit_to_mask(t_id);
+    return ((kn_disabled_threads & mask) == 0) &&
+    ((kn_suspended_threads & mask) != 0);
+  }
+  
+  return false;
+}
+
+bool kn_thread_sleeping(const thread_id t_id)
+{  
+  if (t_id < MAX_THREADS)
+  {
+    uint8_t mask = bit_to_mask(t_id);
+    return ((kn_disabled_threads & mask) == 0) &&
+    ((kn_sleeping_threads & mask) != 0);
+  }
+  
+  return false;
+}
+
+void kn_disable(const thread_id t_id)
+{
+  if (t_id < MAX_THREADS)
+  {
+    kn_disabled_threads |= bit_to_mask(t_id);
+    if (t_id == kn_cur_thread)
+    {
+      kn_scheduler();
+    }
+  }
+}
+
+void kn_resume(const thread_id t_id)
+{
+  extern uint8_t kn_suspended_threads;
+  if (t_id < MAX_THREADS)
+  {
+    kn_suspended_threads &= ~bit_to_mask(t_id);
+  }
+}
+
+void kn_suspend(const thread_id t_id)
+{
+  extern thread_id kn_cur_thread;
+  extern uint8_t kn_suspended_threads;
+  
+  if (t_id < MAX_THREADS)
+  {
+    kn_suspended_threads |= bit_to_mask(t_id);
+    if (t_id == kn_cur_thread)
+    {
+      kn_yield();
+    }
+  }
 }
 
 /******************************************************************************

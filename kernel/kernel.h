@@ -102,8 +102,8 @@ extern bool kn_create_thread(const thread_id t_id, thread_ptr entry_point,
  * \warning This thread does not return.
  * \see kn_create_thread
  */
-extern bool kn_replace_self(thread_ptr entry_point, const bool suspended,
-                            void* arg);
+static inline bool kn_replace_self(thread_ptr entry_point, const bool suspended,
+                                   void* arg);
   
 /**
  * Allows a thread to yield execution to the scheduler.  Will return when the 
@@ -121,17 +121,17 @@ static inline thread_id kn_current_thread();
  * necessarily mean that the thread is currently active, as it may be 
  * suspended or sleeping.
  */
-static inline bool kn_thread_enabled(const thread_id t_id);
+extern bool kn_thread_enabled(const thread_id t_id);
 
 /**
  * Returns true if the specified thread is enabled, but suspended.
  */
-static inline bool kn_thread_suspended(const thread_id t_id);
+extern bool kn_thread_suspended(const thread_id t_id);
 
 /**
  * Returns true if the specified thread is enabled, but currently sleeping.
  */
-static inline bool kn_thread_sleeping(const thread_id t_id);
+extern bool kn_thread_sleeping(const thread_id t_id);
 
 /**
  * Disables the specified thread. If \c t_id is invalid, does nothing. After a 
@@ -141,7 +141,7 @@ static inline bool kn_thread_sleeping(const thread_id t_id);
  * 
  * \warning If kn_disable is the calling thread, this function does not return.
  */
-static inline void kn_disable(const thread_id t_id);
+extern void kn_disable(const thread_id t_id);
 
 /**
  * Disables the calling thread.
@@ -155,14 +155,14 @@ static inline void kn_disable_self();
  * Resumes the specified thread, so that the scheduler may select it for 
  * execution. If \c t_id is invalid, does nothing.
  */
-static inline void kn_resume(const thread_id t_id);
+extern void kn_resume(const thread_id t_id);
 
 /**
  * Suspends the specified thread. If \c t_id is invalid, does nothing. If 
  * \c t_id is the calling thread, this function yields and will return after 
  * the thread has been resumed and selected for execution again.
  */
-static inline void kn_suspend(const thread_id t_id);
+extern void kn_suspend(const thread_id t_id);
 
 /**
  * Suspends the calling thread.
