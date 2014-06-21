@@ -62,8 +62,8 @@ kn_create_thread:
   cp r26, r24
   brne .call_impl
   // if yes, load the stack base
-  ldi r30, pm_hi8(kn_stack_base)
-  ldi r31, pm_lo8(kn_stack_base)
+  ldi ZL, lo8(kn_stack_base)
+  ldi ZH, hi8(kn_stack_base)
   add r31, r24
   adc r30, r1
   lpm r26, Z+
@@ -115,14 +115,14 @@ kn_yield:
   // check the stack canary
 #ifdef USE_STACK_CANARY
   // base canary pointer in Z
-  ldi r30, lo8(kn_canary_loc)
-  ldi r31, hi8(kn_canary_loc)
+  ldi ZL, lo8(kn_canary_loc)
+  ldi ZH, hi8(kn_canary_loc)
   // add the offset for this thread
-  add r30, r24
-  adc r31, ZERO_REG
+  add ZL, r24
+  adc ZH, ZERO_REG
   // and load the canary pointer in X
-  lpm r26, Z+
-  lpm r27, Z
+  lpm XL, Z+
+  lpm XH, Z
   // load and compare the canary value
   ld r25, X
   cpi r25, STACK_CANARY
@@ -131,11 +131,11 @@ kn_yield:
 #endif
 .save_stack:
   // stack array pointer in X
-  ldi r26, lo8(kn_stack)
-  ldi r27, hi8(kn_stack)
+  ldi XL, lo8(kn_stack)
+  ldi XH, hi8(kn_stack)
   // add the offset for this thread
-  add r26, r24
-  adc r27, ZERO_REG
+  add XL, r24
+  adc XH, ZERO_REG
   // get the hardware stack pointer and save it using X
   cli
   in r24, SPL
@@ -199,12 +199,12 @@ kn_scheduler:
   sts kn_cur_thread, r24
   sts kn_cur_thread_mask, r25
   // stack array pointer in X
-  ldi r26, lo8(kn_stack)
-  ldi r27, hi8(kn_stack)
+  ldi XL, lo8(kn_stack)
+  ldi XH, hi8(kn_stack)
   // make the thread id a pointer offset and add it to X
   lsl r24
-  add r26, r24
-  adc r27, ZERO_REG
+  add XL, r24
+  adc XH, ZERO_REG
   // load the new thread's stack pointer 
   ld r24, X+
   ld r25, X
