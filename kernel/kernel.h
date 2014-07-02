@@ -63,11 +63,11 @@ typedef uint8_t thread_id;
 
 /**
  * The function type for threads used by the kernel.  To reduce code size and 
- * unnecessary stack usage, thread functions should be given the gcc attributes 
- * \c OS_task and \c noreturn. While thread functions do not need to worry 
- * about saving or restoring any registers, it is not recommended to give them 
- * the \c naked attribute, because the compiler may generate code that assumes 
- * a prologue has set up the stack.
+ * unnecessary stack usage, thread functions should be given the gcc attribute 
+ * \c OS_task. While thread functions do not need to worry about saving or 
+ * restoring any registers, it is not recommended to give them the \c naked 
+ * attribute, because the compiler may generate code that assumes a prologue 
+ * has set up the stack.
  * 
  * \param[in] my_id The thread id of this thread.
  * \param[in] arg A parameter to pass information to the thread.
