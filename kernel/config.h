@@ -40,6 +40,11 @@
  */
 
 /**
+ * The clock speed of the MCU as used by _delay_ms and so on.
+ */
+#define F_CPU 16000000
+
+/**
  * The maximum number of threads that may be enabled simultaneously.  Valid
  * thread id's to use will be from \ref THREAD0 to 
  * <tt>THREAD[MAX_THREADS - 1]</tt>.

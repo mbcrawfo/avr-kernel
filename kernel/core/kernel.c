@@ -169,6 +169,21 @@ extern void kn_scheduler();
  */
 extern bool kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point,
                                   const bool suspended, void* arg);
+                                  
+/**
+ * Provides initialization of the kernel. Is automatically called in the .init8 
+ * section, just before \c main() is called. When the program enters \c main() 
+ * the kernel is running with only \ref THREAD0 active. The user must enable 
+ * interrupts before using any of the timing features of the kernel.
+ * 
+ * \warning Due to the way that the linker processes symbols, this function 
+ * will only be inserted in the .init8 section if another function from this 
+ * source file is used.
+ * 
+ * \warning If for any reason you try to manually call this function after 
+ * \c main() has been called, you'll totally break your program...
+ */
+static void kn_init() __attribute__((naked, section(".init8"), used));
 
 /******************************************************************************
  * Local function definitions
@@ -219,9 +234,97 @@ bool kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point,
   return true;
 }
 
+void kn_init()
+{
+  // initialize each thread's state
+  for (uint8_t i = 0; i < MAX_THREADS; i++)
+  {
+    kn_stack[i] = (uint8_t*)pgm_read_word(&kn_stack_base[i]);
+    kn_sleep_counter[i] = 0;
+
+    #ifdef USE_STACK_CANARY
+    uint8_t* canary = (uint8_t*)pgm_read_word(&kn_canary_loc[i]);
+    *canary = STACK_CANARY;
+    #endif
+  }
+  
+  // running thread becomes THREAD0
+  kn_cur_thread = THREAD0;
+  kn_cur_thread_mask = 0x01;
+  // THREAD0 is the only enabled thread
+  kn_disabled_threads = ~kn_cur_thread_mask;
+  // no threads suspended
+  kn_suspended_threads = 0x00;
+  // no threads delayed
+  kn_sleeping_threads = 0x00;
+  // set the stack for THREAD0
+  SP = (uint16_t)kn_stack[THREAD0];
+  
+  // reset system counter
+  kn_system_counter = 0;
+  
+#if !defined(F_CPU) || F_CPU != 16000000
+  #error "CPU clock speed not expected value."
+#endif
+
+  // 1ms tick rate means we need a tick every 16000 clock cycles
+  // using a prescaler of 64 gives a tick when timer0 == 250
+  
+  // WGM mode 2 (clear timer on compare match)
+  TCCR0A |= 0x02;
+  // clock source = clock / 64
+  TCCR0B |= 0x03;
+  // timer output compare
+  OCR0A = 250;
+  // enable interrupt when OCR0A is matched
+  TIMSK0 |= 0x02;
+  
+  // sleep mode idle, sleep disabled
+  SMCR = 0;
+}
+
 /******************************************************************************
  * External function definitions
  *****************************************************************************/
+
+void kn_sleep(const uint16_t millis)
+{
+  thread_id t_id = kn_cur_thread;
+  uint8_t mask = bit_to_mask(t_id);
+  
+  ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+  {
+    kn_sleep_counter[t_id] = millis;
+    kn_sleeping_threads |= mask;
+  }  
+  
+  kn_yield();
+}
+
+void kn_sleep_long(uint32_t secs, uint16_t millis)
+{
+  while ((secs != 0) || (millis != 0))
+  {
+    while ((secs != 0) && (millis < (UINT16_MAX - 1000)))
+    {
+       millis += 1000;
+       secs--;
+    }
+    
+    kn_sleep(millis);
+    millis = 0;
+  }
+}
+
+uint32_t kn_millis()
+{
+  uint32_t millis;
+  ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+  {
+    millis = kn_system_counter;
+  }
+  return millis;
+}
 
 bool kn_thread_enabled(const thread_id t_id)
 {
@@ -294,54 +397,36 @@ void kn_suspend(const thread_id t_id)
 }
 
 /******************************************************************************
- * Definitions of automatically called functions
+ * Interrupts
  *****************************************************************************/
 
-/**
- * Provides initialization of the kernel. Is automatically called in the .init8 
- * section, just before \c main() is called. When the program enters \c main() 
- * the kernel is running with only \ref THREAD0 active. The user must enable 
- * interrupts before using any of the timing features of the kernel.
- * 
- * \warning Due to the way that the linker processes symbols, this function 
- * will only be inserted in the .init8 section if another function from this 
- * source file is used.
- * 
- * \warning If for any reason you try to manually call this function after 
- * \c main() has been called, you'll totally break your program...
- */
-static void kn_init() __attribute__((naked, section(".init8"), used));
-void kn_init()
-{ 
-  // initialize each thread's state
-  for (uint8_t i = 0; i < MAX_THREADS; i++)
+ISR(TIMER0_COMPA_vect)
+{
+  kn_system_counter++;  
+  
+  // grab a local copy of the sleep state to avoid a read every time it is used
+  uint8_t sleeping = kn_sleeping_threads;  
+  thread_id t_id = THREAD0;
+  uint8_t mask = 0x01;
+  
+  // sleeping will be 0 when no threads are asleep
+  // mask will become 0 if all threads have been checked
+  while (sleeping && (t_id < MAX_THREADS))
   {
-    kn_stack[i] = (uint8_t*)pgm_read_word(&kn_stack_base[i]);
-    kn_sleep_counter[i] = 0;
-
-#ifdef USE_STACK_CANARY
-    uint8_t* canary = (uint8_t*)pgm_read_word(&kn_canary_loc[i]);
-    *canary = STACK_CANARY;
-#endif
+    // see if this thread is sleeping
+    if (sleeping & mask)
+    {
+      if (--kn_sleep_counter[t_id] == 0)
+      {
+        sleeping &= ~mask;
+      }
+    }
+    
+    t_id++;
+    mask <<= 1;
   }
   
-  // running thread becomes THREAD0
-  kn_cur_thread = THREAD0;
-  kn_cur_thread_mask = 0x01;
-  // THREAD0 is the only enabled thread
-  kn_disabled_threads = ~kn_cur_thread_mask;
-  // no threads suspended
-  kn_suspended_threads = 0x00;
-  // no threads delayed
-  kn_sleeping_threads = 0x00;
-  // set the stack for THREAD0
-  SP = (uint16_t)kn_stack[THREAD0];
-  
-  // reset system counter
-  kn_system_counter = 0;
-  
-  // sleep mode idle, sleep disabled
-  SMCR = 0;
+  kn_sleeping_threads = sleeping;
 }
 
 /**

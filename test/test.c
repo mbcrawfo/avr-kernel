@@ -30,18 +30,20 @@ void threadB(const thread_id my_id, void* arg)
 void main() __attribute__((OS_main));
 void main()
 {
+  DDRB |= _BV(5);  
   sei();
-  kn_create_thread(THREAD2, &threadA, false, NULL);
-  kn_replace_self(&threadB, kn_thread_suspended(THREAD2), NULL);
+  
+  kn_replace_self(&threadA, false, NULL);
 }
 
 void threadA(const thread_id my_id, void* arg)
 {
-  uint8_t derp = my_id + 1;
-  while (1)
+  while(1)
   {
-    PORTB = kn_thread_suspended(my_id);
-    kn_yield();
+    PORTB ^= _BV(5);
+    kn_sleep_long(70, 0);
+    PORTB ^= _BV(5);
+    kn_sleep_long(5, 0);
   }
 }
 

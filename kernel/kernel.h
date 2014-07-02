@@ -72,7 +72,7 @@ typedef uint8_t thread_id;
  * \param[in] my_id The thread id of this thread.
  * \param[in] arg A parameter to pass information to the thread.
  * 
- * \warning Do not allow any thread to return: doing so will break your program.
+ * \warning Do not allow any thread to return: doing so will break things...
  */
 typedef void (*thread_ptr)(const thread_id my_id, void* arg);
 
@@ -110,6 +110,31 @@ static inline bool kn_replace_self(thread_ptr entry_point, const bool suspended,
  * scheduler selects the calling thread for execution again.
  */
 extern void kn_yield();
+
+/**
+ * Allows a thread to sleep for a certain amount of time. For sleep times 
+ * longer than ~65 seconds, use \ref kn_sleep_long.
+ * 
+ * \param[in] millis The amount of time in milliseconds to sleep.
+ */
+extern void kn_sleep(const uint16_t millis);
+
+/**
+ * Allows a thread to sleep for longer time periods than \ref kn_sleep. The 
+ * total sleep time is <tt>secs*1000+millis</tt> milliseconds. For example, to 
+ * sleep for 70.25 seconds, pass <tt>secs=70</tt> and <tt>millis=250</tt>. The 
+ * maximum sleep time is approximately 49 days.
+ * 
+ * \param[in] secs The number of seconds to sleep.
+ * \param[in] millis The number of milliseconds to sleep.
+ */
+extern void kn_sleep_long(uint32_t secs, uint16_t millis);
+
+/**
+ * Returns the system timer, in milliseconds. This value will overflow after 
+ * 49 days.
+ */
+extern uint32_t kn_millis();
 
 /**
  * Returns the id of the currently running thread.
