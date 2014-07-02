@@ -67,8 +67,8 @@
 #endif
 
 // verify that canary value is defined if needed 
-#if defined(USE_STACK_CANARY) && !defined(STACK_CANARY)
-  #error "USE_STACK_CANARY defined but STACK_CANARY undefined"
+#if defined(KERNEL_USE_STACK_CANARY) && !defined(STACK_CANARY)
+  #error "KERNEL_USE_STACK_CANARY defined but STACK_CANARY undefined"
 #endif
 
 // thread size checking
@@ -237,7 +237,7 @@
     STACK_CAST(THREAD6_STACK_BASE - THREAD6_STACK_SIZE)
 #endif
 
-#ifdef USE_STACK_CANARY
+#ifdef KERNEL_USE_STACK_CANARY
   /**
    * Sets pointer to the stack canary for \ref THREAD0.
    * \ingroup kernel_implementation

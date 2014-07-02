@@ -23,7 +23,6 @@
  */
 
 #include "kernel.h"
-#include "config.h"
 #include "stacks.h"
 #include <avr/io.h>
 #include <avr/pgmspace.h>
@@ -76,7 +75,7 @@ const uint8_t* const kn_stack_base[MAX_THREADS] PROGMEM = {
   #endif
 };
 
-#ifdef USE_STACK_CANARY
+#ifdef KERNEL_USE_STACK_CANARY
   /**
    * Contains pointers to each stack's canary location for easier run time 
    * access.
@@ -167,7 +166,7 @@ extern void kn_scheduler();
  * \warning As with \ref kn_create_thread, this function does not return if 
  * \c t_id is the currently active thread.
  */
-extern bool kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point,
+extern void kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point,
                                   const bool suspended, void* arg);
                                   
 /**
@@ -189,13 +188,11 @@ static void kn_init() __attribute__((naked, section(".init8"), used));
  * Local function definitions
  *****************************************************************************/
 
-bool kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point, 
+void kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point, 
                            const bool suspended, void* arg)
 {
-  if (!entry_point)
-  {
-    return false;
-  }
+  KERNEL_ASSERT(t_id < MAX_THREADS);
+  KERNEL_ASSERT(entry_point != NULL);
   
   // set the initial state of the thread's stack
   // the stack is set up so that the scheduler "returns" to the bootstrap 
@@ -230,8 +227,6 @@ bool kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point,
   {
     kn_scheduler();
   }
-  
-  return true;
 }
 
 void kn_init()
@@ -242,7 +237,7 @@ void kn_init()
     kn_stack[i] = (uint8_t*)pgm_read_word(&kn_stack_base[i]);
     kn_sleep_counter[i] = 0;
 
-    #ifdef USE_STACK_CANARY
+    #ifdef KERNEL_USE_STACK_CANARY
     uint8_t* canary = (uint8_t*)pgm_read_word(&kn_canary_loc[i]);
     *canary = STACK_CANARY;
     #endif
@@ -328,78 +323,61 @@ uint32_t kn_millis()
 
 bool kn_thread_enabled(const thread_id t_id)
 {
-  if (t_id < MAX_THREADS)
-  {
-    return (kn_disabled_threads & bit_to_mask(t_id)) == 0;
-  }
-  
-  return false;
+  KERNEL_ASSERT(t_id < MAX_THREADS);
+  return (kn_disabled_threads & bit_to_mask(t_id)) == 0;
 }
 
 bool kn_thread_suspended(const thread_id t_id)
-{ 
-  if (t_id < MAX_THREADS)
-  {
-    uint8_t mask = bit_to_mask(t_id);
-    return ((kn_disabled_threads & mask) == 0) &&
-    ((kn_suspended_threads & mask) != 0);
-  }
-  
-  return false;
+{
+  KERNEL_ASSERT(t_id < MAX_THREADS);
+  uint8_t mask = bit_to_mask(t_id);
+  return ((kn_disabled_threads & mask) == 0) &&
+         ((kn_suspended_threads & mask) != 0);
 }
 
 bool kn_thread_sleeping(const thread_id t_id)
-{  
-  if (t_id < MAX_THREADS)
-  {
-    uint8_t mask = bit_to_mask(t_id);
-    return ((kn_disabled_threads & mask) == 0) &&
-    ((kn_sleeping_threads & mask) != 0);
-  }
-  
-  return false;
+{
+  KERNEL_ASSERT(t_id < MAX_THREADS); 
+  uint8_t mask = bit_to_mask(t_id);
+  return ((kn_disabled_threads & mask) == 0) &&
+         ((kn_sleeping_threads & mask) != 0);
 }
 
 void kn_disable(const thread_id t_id)
 {
-  if (t_id < MAX_THREADS)
+  KERNEL_ASSERT(t_id < MAX_THREADS);
+  kn_disabled_threads |= bit_to_mask(t_id);
+  if (t_id == kn_cur_thread)
   {
-    kn_disabled_threads |= bit_to_mask(t_id);
-    if (t_id == kn_cur_thread)
-    {
-      kn_scheduler();
-    }
+    kn_scheduler();
   }
 }
 
 void kn_resume(const thread_id t_id)
 {
-  extern uint8_t kn_suspended_threads;
-  if (t_id < MAX_THREADS)
-  {
-    kn_suspended_threads &= ~bit_to_mask(t_id);
-  }
+  KERNEL_ASSERT(t_id < MAX_THREADS);
+  kn_suspended_threads &= ~bit_to_mask(t_id);
 }
 
 void kn_suspend(const thread_id t_id)
 {
-  extern thread_id kn_cur_thread;
-  extern uint8_t kn_suspended_threads;
-  
-  if (t_id < MAX_THREADS)
+  KERNEL_ASSERT(t_id < MAX_THREADS);
+  kn_suspended_threads |= bit_to_mask(t_id);
+  if (t_id == kn_cur_thread)
   {
-    kn_suspended_threads |= bit_to_mask(t_id);
-    if (t_id == kn_cur_thread)
-    {
-      kn_yield();
-    }
+    kn_yield();
   }
 }
+
+/**
+ * @}
+ */
 
 /******************************************************************************
  * Interrupts
  *****************************************************************************/
 
+/** \cond */
 ISR(TIMER0_COMPA_vect)
 {
   kn_system_counter++;  
@@ -428,7 +406,4 @@ ISR(TIMER0_COMPA_vect)
   
   kn_sleeping_threads = sleeping;
 }
-
-/**
- * @}
- */
+/** \endcond */

@@ -45,6 +45,12 @@
 #define F_CPU 16000000
 
 /**
+ * If defined, \c KERNEL_USE_ASSERT enables assertion checks within the kernel. 
+ * When an assertion fails, \ref kn_assertion_failure is called.
+ */
+#define KERNEL_USE_ASSERT
+
+/**
  * The maximum number of threads that may be enabled simultaneously.  Valid
  * thread id's to use will be from \ref THREAD0 to 
  * <tt>THREAD[MAX_THREADS - 1]</tt>.
@@ -54,14 +60,14 @@
 #define MAX_THREADS 8
 
 /**
- * If \c USE_STACK_CANARY is defined, the kernel will place a canary value at 
- * the top of each thread's stack, which it uses to determine if the thread has
- * had a stack overflow.
+ * If \c KERNEL_USE_STACK_CANARY is defined, the kernel will place a canary 
+ * value at the top of each thread's stack, which it uses to determine if the 
+ * thread has had a stack overflow.
  */
-#define USE_STACK_CANARY
+#define KERNEL_USE_STACK_CANARY
 
 /**
- * The canary value used if \ref USE_STACK_CANARY is defined.
+ * The canary value used if \ref KERNEL_USE_STACK_CANARY is defined.
  * 
  * \note Must be a 1 byte value.
  */

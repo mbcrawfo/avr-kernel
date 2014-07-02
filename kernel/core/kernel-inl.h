@@ -28,13 +28,13 @@
 #ifndef KERNEL_INL_H_
 #define KERNEL_INL_H_
 
-#include "config.h"
 #include <avr/pgmspace.h>
 
-bool kn_replace_self(thread_ptr entry_point, const bool suspended, void* arg)
+void kn_replace_self(thread_ptr entry_point, const bool suspended, void* arg)
 {
   extern thread_id kn_cur_thread;
-  return kn_create_thread(kn_cur_thread, entry_point, suspended, arg);
+  KERNEL_ASSERT(entry_point != NULL);
+  kn_create_thread(kn_cur_thread, entry_point, suspended, arg);
 }
 
 thread_id kn_current_thread()
@@ -65,6 +65,7 @@ void kn_suspend_self()
 uint8_t bit_to_mask(uint8_t bit_num)
 {
   extern const uint8_t kn_bitmasks[8] PROGMEM;
+  KERNEL_ASSERT(bit_num < 8);
   return pgm_read_byte(&kn_bitmasks[bit_num]);
 }
 

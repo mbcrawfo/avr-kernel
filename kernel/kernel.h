@@ -25,14 +25,9 @@
 #ifndef KERNEL_H_
 #define KERNEL_H_
 
+#include "config.h"
 #include <stdbool.h>
 #include <stdint.h>
-
-#ifndef NULL
-  /** \cond */
-  #define NULL ((void*)0)
-  /** \endcond */
-#endif
 
 /**
  * \defgroup kernel_interface Kernel Interface
@@ -79,20 +74,17 @@ typedef void (*thread_ptr)(const thread_id my_id, void* arg);
 /**
  * Creates a new thread of operation within the kernel.
  * 
- * \param[in] t_id The id of the new thread. Must be a valid thread identifier. 
- * If the thread id is an enabled thread, that thread will be replaced.
- * \param[in] entry_point The function that will be run as the new thread. Must 
- * not be null.
+ * \param[in] t_id The id of the new thread. If the thread id is an enabled 
+ * thread, that thread will be replaced.
+ * \param[in] entry_point The function that will be run as the new thread.
  * \param[in] suspended The initial state of the new thread. If true, the 
  * thread will not run until it is manually resumed.
  * \param[in] arg The parameter that will be passed to the function.
  * 
- * \return True if the thread was created successfully.
- * 
  * \warning If \c t_id is the currently active thread, this function does not 
  * return.
  */
-extern bool kn_create_thread(const thread_id t_id, thread_ptr entry_point, 
+extern void kn_create_thread(const thread_id t_id, thread_ptr entry_point, 
                              const bool suspended, void* arg);
 /**
  * Replaces the calling thread with a new thread. Basically is just a wrapper 
@@ -102,7 +94,7 @@ extern bool kn_create_thread(const thread_id t_id, thread_ptr entry_point,
  * \warning Does not return.
  * \see kn_create_thread
  */
-static inline bool kn_replace_self(thread_ptr entry_point, const bool suspended,
+static inline void kn_replace_self(thread_ptr entry_point, const bool suspended,
                                    void* arg);
   
 /**
@@ -178,14 +170,14 @@ static inline void kn_disable_self();
 
 /**
  * Resumes the specified thread, so that the scheduler may select it for 
- * execution. If \c t_id is invalid, does nothing.
+ * execution.
  */
 extern void kn_resume(const thread_id t_id);
 
 /**
- * Suspends the specified thread. If \c t_id is invalid, does nothing. If 
- * \c t_id is the calling thread, this function yields and will return after 
- * the thread has been resumed and selected for execution again.
+ * Suspends the specified thread. If t_id is the calling thread, this function 
+ * yields and will return after the thread has been resumed and selected for 
+ * execution again.
  */
 extern void kn_suspend(const thread_id t_id);
 
@@ -209,11 +201,49 @@ static inline void kn_suspend_self();
  */
 static inline uint8_t bit_to_mask(uint8_t bit_num) __attribute__((pure));
 
+#ifdef KERNEL_USE_ASSERT
+/**
+ * A user supplied function that is called when an assertion fails. Used only 
+ * if \ref KERNEL_USE_ASSERT is defined.
+ * 
+ * \param[in] expr The assertion expression that failed.
+ * \param[in] file The name of the file where the assertion failed.
+ * \param[in] base_file The file being compiled when the assertion failed.
+ * \param[in] line The line number of \c file where the assertion failed.
+ */
+extern void kn_assertion_failure(const char* expr, const char* file,
+                                 const char* base_file, const int line);
+#endif
+
+#ifdef KERNEL_USE_STACK_CANARY
+/**
+ * A user supplied function that is called when a stack overflow is detected. 
+ * Used only if \ref KERNEL_USE_STACK_CANARY is defined.
+ */
+extern void kn_stack_overflow(const thread_id t_id);
+#endif
+
 /**
  * @}
  */
 
-// inline functions definitions
+/** \cond */
+#ifndef NULL  
+  #define NULL ((void*)0)
+#endif
+
+#ifdef KERNEL_USE_ASSERT
+  #define KERNEL_ASSERT(expr) \
+    do { \
+      if (!(expr)) \
+        kn_assertion_failure(#expr, __FILE__, __BASE_FILE__, __LINE__); \
+    } while (0)
+#else
+  #define KERNEL_ASSERT(expr) ((void)0)
+#endif
+/** \endcond */
+
+// inline function definitions
 #include "core/kernel-inl.h"
 
 #endif

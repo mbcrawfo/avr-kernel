@@ -39,6 +39,10 @@
 .extern kn_sleeping_threads
 .extern kn_stack
 
+// external user defined symbols
+.extern kn_assertion_failure
+.extern kn_stack_overflow
+
   .section .text
 
 /******************************************************************************
@@ -54,9 +58,11 @@
 .global kn_create_thread
 kn_create_thread:
   // r24, r22/23, r20, r18/19 hold the params
-  // validate the thread id
+#ifdef KERNEL_USE_ASSERT
   cpi r24, MAX_THREADS
-  brsh .bad_tid
+  // let the implementation handle the assertion failure
+  brsh .call_impl
+#endif
   // see if we are replacing the current thread
   lds r26, kn_cur_thread
   cp r26, r24
@@ -79,10 +85,6 @@ kn_create_thread:
   // end atomic block
 .call_impl:
   call kn_create_thread_impl
-  ret
-.bad_tid:
-  // return false
-  clr r24
   ret
 
 // void kn_yield()
@@ -113,7 +115,7 @@ kn_yield:
   lds r24, kn_cur_thread
   lsl r24
   // check the stack canary
-#ifdef USE_STACK_CANARY
+#ifdef KERNEL_USE_STACK_CANARY
   // base canary pointer in Z
   ldi ZL, lo8(kn_canary_loc)
   ldi ZH, hi8(kn_canary_loc)
@@ -127,7 +129,9 @@ kn_yield:
   ld r25, X
   cpi r25, STACK_CANARY
   breq .save_stack
-  //TODO: error handling
+  // restore the thread id for the function parameter
+  lsr r24
+  call kn_stack_overflow
 #endif
 .save_stack:
   // stack array pointer in X
