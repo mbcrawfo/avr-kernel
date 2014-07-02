@@ -99,7 +99,7 @@ extern bool kn_create_thread(const thread_id t_id, thread_ptr entry_point,
  * for the \ref kn_create_thread that automatically supplies the id of the 
  * calling thread. See \ref kn_create_thread for behavior and parameter info.
  * 
- * \warning This thread does not return.
+ * \warning Does not return.
  * \see kn_create_thread
  */
 static inline bool kn_replace_self(thread_ptr entry_point, const bool suspended,
@@ -113,7 +113,7 @@ extern void kn_yield();
 
 /**
  * Allows a thread to sleep for a certain amount of time. For sleep times 
- * longer than ~65 seconds, use \ref kn_sleep_long.
+ * longer than 65 seconds, use \ref kn_sleep_long.
  * 
  * \param[in] millis The amount of time in milliseconds to sleep.
  */
@@ -123,7 +123,7 @@ extern void kn_sleep(const uint16_t millis);
  * Allows a thread to sleep for longer time periods than \ref kn_sleep. The 
  * total sleep time is <tt>secs*1000+millis</tt> milliseconds. For example, to 
  * sleep for 70.25 seconds, pass <tt>secs=70</tt> and <tt>millis=250</tt>. The 
- * maximum sleep time is approximately 49 days.
+ * maximum sleep time is approximately 136 years.
  * 
  * \param[in] secs The number of seconds to sleep.
  * \param[in] millis The number of milliseconds to sleep.
@@ -160,7 +160,7 @@ extern bool kn_thread_sleeping(const thread_id t_id);
 
 /**
  * Disables the specified thread. If \c t_id is invalid, does nothing. After a 
- * thread has been disable, you must call \ref kn_create_thread to restart it 
+ * thread has been disabled, you must call \ref kn_create_thread to restart it 
  * or replace it with a new thread. If you wish to "pause" a thread with the 
  * ability to resume it at a later time, use \ref kn_suspend.
  * 
