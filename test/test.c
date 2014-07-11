@@ -22,64 +22,96 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
+
 void threadA(const thread_id my_id, void* arg) 
   __attribute__((OS_task));
 void threadB(const thread_id my_id, void* arg) 
+  __attribute__((OS_task));
+void threadC(const thread_id my_id, void* arg)
   __attribute__((OS_task));
 
 #pragma GCC diagnostic ignored "-Wmain"
 void main() __attribute__((OS_main));
 void main()
-{ 
+{
+  DDRD |= (1 << DDD2) | (1 << DDD3) | (1 << DDD4);
   sei();
   
+  kn_create_thread(THREAD1, &threadB, false, NULL);
+  kn_create_thread(THREAD2, &threadC, false, NULL);
   kn_replace_self(&threadA, false, NULL);
 }
 
+// blink pin 3
+void threadA(const thread_id my_id, void* arg)
+{
+  (void)my_id; (void)arg;
+  
+  DDRD |= (1 << DDD2);
+  
+  while(1)
+  {
+    PORTD ^= (1 << DDD2);
+    kn_sleep(250);
+  }
+}
+
+// blink pin4
+void threadB(const thread_id my_id, void* arg)
+{
+  (void)my_id; (void)arg;
+  
+  DDRD |= (1 << DDD3);
+  
+  while (1)
+  {
+    PORTD ^= (1 << DDD3);
+    kn_sleep(500);
+  }
+}
+
+// blink pin5
+void threadC(const thread_id my_id, void* arg)
+{
+  (void)my_id; (void)arg;
+  
+  DDRD |= (1 << DDD4);
+  
+  while (1)
+  {
+    PORTD ^= (1 << DDD4);
+    kn_sleep(1000);
+  }
+}
+
+// slow blink LED13 for assert failure
+// TODO: send assert message over serial
 void kn_assertion_failure(const char* expr, const char* file, 
                           const char* base_file, int line)
 {
   (void)expr; (void)file; (void)base_file; (void)line;
   
   cli();
-  DDRB |= _BV(5);
+  DDRB |= (1 << DDB5);
   
   while (1)
   {
-    PORTB ^= _BV(5);
+    PORTB ^= (1 << PORTB5);
     _delay_ms(500);
   }
 }
 
+// rapid blink LED13 for stack overflow
 void kn_stack_overflow(const thread_id t_id)
 {
   (void)t_id;
   
   cli();
-  DDRB |= _BV(5);
+  DDRB |= (1 << DDB5);
   
   while (1)
   {
-    PORTB ^= _BV(5);
+    PORTB ^= (1 << PORTB5);
     _delay_ms(250);
-  }
-}
-
-void threadA(const thread_id my_id, void* arg)
-{
-  while(1)
-  {
-    PORTB ^= _BV(5);
-    kn_sleep_long(70000);
-    PORTB ^= _BV(5);
-    kn_sleep_long(5000);
-  }
-}
-
-void threadB(const thread_id my_id, void* arg)
-{
-  while (1)
-  {
-    kn_yield();
   }
 }
