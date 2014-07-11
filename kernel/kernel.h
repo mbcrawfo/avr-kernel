@@ -113,14 +113,11 @@ extern void kn_sleep(const uint16_t millis);
 
 /**
  * Allows a thread to sleep for longer time periods than \ref kn_sleep. The 
- * total sleep time is <tt>secs*1000+millis</tt> milliseconds. For example, to 
- * sleep for 70.25 seconds, pass <tt>secs=70</tt> and <tt>millis=250</tt>. The 
- * maximum sleep time is approximately 136 years.
+ * maximum sleep time is approximately 49 days.
  * 
- * \param[in] secs The number of seconds to sleep.
  * \param[in] millis The number of milliseconds to sleep.
  */
-extern void kn_sleep_long(uint32_t secs, uint16_t millis);
+extern void kn_sleep_long(uint32_t millis);
 
 /**
  * Returns the system timer, in milliseconds. This value will overflow after 
@@ -210,6 +207,9 @@ static inline uint8_t bit_to_mask(uint8_t bit_num) __attribute__((pure));
  * \param[in] file The name of the file where the assertion failed.
  * \param[in] base_file The file being compiled when the assertion failed.
  * \param[in] line The line number of \c file where the assertion failed.
+ * 
+ * \warning This function should call \c exit or otherwise be prevented from 
+ * returning.
  */
 extern void kn_assertion_failure(const char* expr, const char* file,
                                  const char* base_file, const int line);
@@ -219,6 +219,13 @@ extern void kn_assertion_failure(const char* expr, const char* file,
 /**
  * A user supplied function that is called when a stack overflow is detected. 
  * Used only if \ref KERNEL_USE_STACK_CANARY is defined.
+ * 
+ * \param[in] t_id The id of the active thread when the stack overflow was 
+ * detected. This does not necessarily mean that corruption is limited to this 
+ * thread's stack.
+ * 
+ * \warning If you return from this thread, the kernel scheduler will attempt 
+ * to continue, but you do so at your own risk.
  */
 extern void kn_stack_overflow(const thread_id t_id);
 #endif

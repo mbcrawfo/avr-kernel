@@ -296,18 +296,24 @@ void kn_sleep(const uint16_t millis)
   kn_yield();
 }
 
-void kn_sleep_long(uint32_t secs, uint16_t millis)
+void kn_sleep_long(uint32_t millis)
 {
-  while ((secs != 0) || (millis != 0))
+  uint16_t sleep_time;
+  
+  while (millis)
   {
-    while ((secs != 0) && (millis < (UINT16_MAX - 1000)))
+    if (millis > UINT16_MAX)
     {
-       millis += 1000;
-       secs--;
+      sleep_time = UINT16_MAX;
+      millis -= UINT16_MAX;
+    }
+    else
+    {
+      sleep_time = millis;
+      millis = 0;
     }
     
-    kn_sleep(millis);
-    millis = 0;
+    kn_sleep(sleep_time);
   }
 }
 

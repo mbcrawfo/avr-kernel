@@ -70,9 +70,9 @@ void threadA(const thread_id my_id, void* arg)
   while(1)
   {
     PORTB ^= _BV(5);
-    kn_sleep_long(70, 0);
+    kn_sleep_long(70000);
     PORTB ^= _BV(5);
-    kn_sleep_long(5, 0);
+    kn_sleep_long(5000);
   }
 }
 
