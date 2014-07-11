@@ -1,0 +1,27 @@
+var kernel_8c =
+[
+    [ "kn_create_thread_impl", "d5/d45/group__kernel__implementation.html#ga6228dcb54ba246b85276aaeed56688a9", null ],
+    [ "kn_disable", "d5/d45/group__kernel__implementation.html#ga025e53113a0cc04e0980dd0d114a014a", null ],
+    [ "kn_init", "d5/d45/group__kernel__implementation.html#gab5a6b433dca3a62dbd21a6569a170f73", null ],
+    [ "kn_millis", "d5/d45/group__kernel__implementation.html#gaeeb599f21d12ef600089c4b976765fd7", null ],
+    [ "kn_resume", "d5/d45/group__kernel__implementation.html#ga0c1570dbcd4aa239ec05e01cf4c890f0", null ],
+    [ "kn_scheduler", "d5/d45/group__kernel__implementation.html#ga23024ae76583026f2c52c25873311d19", null ],
+    [ "kn_sleep", "d5/d45/group__kernel__implementation.html#ga19cfee4ebc5034e03a232fdad3d55736", null ],
+    [ "kn_sleep_long", "d5/d45/group__kernel__implementation.html#ga5a904aeba36b3882eae1dc3489963f8a", null ],
+    [ "kn_suspend", "d5/d45/group__kernel__implementation.html#ga887aaf8e03b09ec2e566d807e8a0a898", null ],
+    [ "kn_thread_bootstrap", "d5/d45/group__kernel__implementation.html#ga823b6660be7ce9827a9e1009b086c303", null ],
+    [ "kn_thread_enabled", "d5/d45/group__kernel__implementation.html#gafc13a8fbe2068cc1d65d3656a4c8b2d5", null ],
+    [ "kn_thread_sleeping", "d5/d45/group__kernel__implementation.html#ga5c019f51ff96e031f14b94471045b791", null ],
+    [ "kn_thread_suspended", "d5/d45/group__kernel__implementation.html#gabe3a633c52577a8612362353c572bde7", null ],
+    [ "kn_bitmasks", "d5/d45/group__kernel__implementation.html#ga4560b7972abb50915aa9c0c9b97766d3", null ],
+    [ "kn_canary_loc", "d5/d45/group__kernel__implementation.html#ga27dae27da25b9ef70d87a54b49b91dbe", null ],
+    [ "kn_cur_thread", "d5/d45/group__kernel__implementation.html#ga2a43532578f070a64db3941bfdf96ceb", null ],
+    [ "kn_cur_thread_mask", "d5/d45/group__kernel__implementation.html#gaadeaa65a0c99b544041ade5208e792a0", null ],
+    [ "kn_disabled_threads", "d5/d45/group__kernel__implementation.html#ga3b20b6279e48feaa3a958f3c6fca0ac5", null ],
+    [ "kn_sleep_counter", "d5/d45/group__kernel__implementation.html#ga558edb3e31efcb39a9eedd64da89e2a0", null ],
+    [ "kn_sleeping_threads", "d5/d45/group__kernel__implementation.html#ga7c4acd477948df21d7727d0c8e211ca5", null ],
+    [ "kn_stack", "d5/d45/group__kernel__implementation.html#gaf4e578234391b528052566b21a6e81f5", null ],
+    [ "kn_stack_base", "d5/d45/group__kernel__implementation.html#ga494844fa496dc84cd3fbdde2ef7864a1", null ],
+    [ "kn_suspended_threads", "d5/d45/group__kernel__implementation.html#ga5d0f8193c4b434fcd7518c2bfc5dff13", null ],
+    [ "kn_system_counter", "d5/d45/group__kernel__implementation.html#ga3ccd02fe4278b48b8628ce12a64fe513", null ]
+];
