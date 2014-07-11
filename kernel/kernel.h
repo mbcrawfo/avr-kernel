@@ -22,6 +22,37 @@
  * \see kernel_interface
  */
 
+/** \mainpage Overview
+ * 
+ * \section intro Introduction
+ * avr-kernel is a lightweight kernel for the AtMega328p microcontroller, 
+ * capable of supporting up to 8 threads.  When compiled with full support 
+ * for 8 threads, the kernel uses 41 bytes of RAM, and around 1 KB of program 
+ * memory.
+ * 
+ * \section thread_model Threading Model
+ * The kernel uses a fairly basic round-robin cooperative scheduler.  Each 
+ * thread "owns" the processor and must yield to the kernel so that other 
+ * threads may execute. After all of the other ready threads have been given a 
+ * chance to execute, the original thread is selected again.  In other words, 
+ * when a thread yields to the kernel, there are no guarantees of how quickly 
+ * the thread will be executed again.
+ * 
+ * Threads exist in one of four possible states:
+ * -# Disabled.  A disabled thread is totally inactive and exists in an invalid 
+ *    state.  It will not execute until a new thread is created in its place.  
+ *    Initially, the \c main function is entered as \c THREAD0, and all other 
+ *    threads are disabled.
+ * -# Suspended. A suspended thread exists in a valid state, but it does not 
+ *    execute.  The thread must be resumed from another thread or an interrupt 
+ *    to allow execution to continue.
+ * -# Sleeping.  Sleeping threads exist in a valid state, but their execution 
+ *    is suspended and they will automatically be resumed by the kernel when 
+ *    their sleep time has expired.
+ * -# Active.  A thread that is not in any of the above states is active, and 
+ *    will be executed by the kernel scheduler.
+ */
+
 #ifndef KERNEL_H_
 #define KERNEL_H_
 
