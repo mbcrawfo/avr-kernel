@@ -99,21 +99,23 @@ $(document).ready(function(){initNavTree('index.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>avr-kernel is a lightweight kernel for the AtMega328p microcontroller, capable of supporting up to 8 threads. When compiled with full support for 8 threads, the kernel uses 41 bytes of RAM and around 1 KB of program memory.</p>
+<p>See <a class="el" href="d1/d3f/group__kernel__config.html">Kernel Configuration</a> for the user-configurable options available, and <a class="el" href="dc/db7/group__kernel__interface.html">Kernel Interface</a> for the main interface.</p>
 <p>The kernel uses a fairly basic round-robin cooperative scheduler. Each thread "owns" the processor and must yield to the kernel so that other threads may execute. After all of the other ready threads have been given a chance to execute, the original thread is selected again. In other words, when a thread yields to the kernel, there are no guarantees of how quickly the thread will be executed again.</p>
 <p>Threads exist in one of four possible states:</p><ol type="1">
-<li><b>Disabled</b> A disabled thread is totally inactive and exists in an invalid state. It will not execute until a new thread is created in its place. Initially, the <code>main</code> function is entered as <code>THREAD0</code>, and all other threads are disabled.</li>
-<li><b>Suspended</b> A suspended thread exists in a valid state, but it does not execute. The thread must be resumed from another thread or an interrupt to allow execution to continue.</li>
-<li><b>Sleeping</b> Sleeping threads exist in a valid state, but their execution is suspended and they will automatically be resumed by the kernel when their sleep time has expired.</li>
+<li><b>Disabled</b> The thread is totally inactive and exists in an invalid state. It will not execute until a new thread is created in its place. Initially, the <code>main</code> function is entered as <code>THREAD0</code>, and all other threads are disabled.</li>
+<li><b>Suspended</b> The thread exists in a valid state, but it does not execute. The thread must be resumed from another thread or an interrupt to allow execution to continue.</li>
+<li><b>Sleeping</b> Sleeping threads exist in a valid state, but their execution is suspended and they will automatically be resumed by the kernel when their sleep time is elapsed.</li>
 <li><b>Active</b> A thread that is not in any of the above states is active, and will be executed by the kernel scheduler.</li>
 </ol>
-<p>Each thread runs on its own stack, and the stack size for each thread may be configured in the kernel options. However, kernel functions and interrupts are both executed on the stack of the thread that is active when they are called.</p>
-<p>Kernel initialization occurs automatically before <code>main</code> is called. The only user action necessary is to enable interrupts, as the kernel uses <code>Timer0</code> to provide a millisecond counter and implement the sleep functions. </p>
+<p>Each thread runs on its own stack, and the stack size for each thread may be configured in the kernel options. However, kernel functions and interrupts are both executed on the stack of the thread that is active when they are called. If you wish to use <code>malloc</code> when using this kernel, you will need to include <code><a class="el" href="dc/d3f/stacks_8h.html" title="Defines the stack locations for the kernel. ">core/stacks.h</a></code>, and set <code>__malloc_heap_end = RAMEND - TOTAL_STACK_SIZE</code> early in your program initialization (see <a href="http://www.nongnu.org/avr-libc/user-manual/malloc.html">http://www.nongnu.org/avr-libc/user-manual/malloc.html</a>).</p>
+<p>Kernel initialization occurs automatically before <code>main</code> is called. The only user action necessary is to enable interrupts, as the kernel uses <code>Timer0</code> to provide a millisecond counter and implement the sleep functions.</p>
+<p>To assist with debugging, the user may enable canary values to detect when a thread has overflowed its stack. Additionally an assertion macro may be enabled to provide error checking for the parameters of the kernel functions. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Jul 11 2014 17:57:03 for avr-kernel by
+    <li class="footer">Generated on Sat Jul 12 2014 17:35:22 for avr-kernel by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

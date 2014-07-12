@@ -124,6 +124,8 @@ Macros</h2></td></tr>
 <tr class="separator:gad8aecb01033bf810862d0d857fda1a59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga58a28bc368771922ec0209445c78681c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga58a28bc368771922ec0209445c78681c">THREAD7</a></td></tr>
 <tr class="separator:ga58a28bc368771922ec0209445c78681c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga14468a966905fc254caa971cd60c4039"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga14468a966905fc254caa971cd60c4039">kn_assert</a>(expr)</td></tr>
+<tr class="separator:ga14468a966905fc254caa971cd60c4039"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -166,14 +168,31 @@ Functions</h2></td></tr>
 <tr class="separator:ga431eeca3a1ff7e15833bd2a31cea9d3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6eb0767d8918b91d1a1badae113beeab"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga6eb0767d8918b91d1a1badae113beeab">bit_to_mask</a> (uint8_t bit_num)</td></tr>
 <tr class="separator:ga6eb0767d8918b91d1a1badae113beeab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga876fe03d3b4b2c2fdad92930223cb376"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga876fe03d3b4b2c2fdad92930223cb376">kn_assertion_failure</a> (const char *expr, const char *file, const char *base_file, const int line)</td></tr>
-<tr class="separator:ga876fe03d3b4b2c2fdad92930223cb376"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9bc169495785af2f011f91237857285d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga9bc169495785af2f011f91237857285d">kn_stack_overflow</a> (const <a class="el" href="../../dc/db7/group__kernel__interface.html#ga03be26510f0df885554807417112eddb">thread_id</a> t_id)</td></tr>
 <tr class="separator:ga9bc169495785af2f011f91237857285d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga876fe03d3b4b2c2fdad92930223cb376"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga876fe03d3b4b2c2fdad92930223cb376">kn_assertion_failure</a> (const char *expr, const char *file, const char *base_file, const int line)</td></tr>
+<tr class="separator:ga876fe03d3b4b2c2fdad92930223cb376"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Contains the public interface of the kernel. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga14468a966905fc254caa971cd60c4039"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define kn_assert</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">expr</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If the given expression evaluates to false, calls <a class="el" href="../../dc/db7/group__kernel__interface.html#ga876fe03d3b4b2c2fdad92930223cb376">kn_assertion_failure</a>. </p>
+
+</div>
+</div>
 <a class="anchor" id="gae6f7bae0af6ceebb3053cc1649949a30"></a>
 <div class="memitem">
 <div class="memproto">
@@ -301,7 +320,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The function type for threads used by the kernel. To reduce code size and unnecessary stack usage, thread functions should be given the gcc attribute <code>OS_task</code>. While thread functions do not need to worry about saving or restoring any registers, it is not recommended to give them the <code>naked</code> attribute, because the compiler may generate code that assumes a prologue has set up the stack.</p>
+<p>The function type for threads used by the kernel. To reduce code size and unnecessary stack usage, thread functions should be given the gcc attribute <code>OS_task</code>. While thread functions do not need to worry about saving or restoring any registers, it is not recommended to give them the <code>naked</code> attribute, because the compiler may generate code that assumes the stack has been set up by a function prologue.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">my_id</td><td>The thread id of this thread. </td></tr>
@@ -481,8 +500,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Disables the specified thread. If <code>t_id</code> is invalid, does nothing. After a thread has been disabled, you must call <a class="el" href="../../dc/db7/group__kernel__interface.html#ga8eaa4ca4aeefdcb5e1e4d610012ae97a">kn_create_thread</a> to restart it or replace it with a new thread. If you wish to "pause" a thread with the ability to resume it at a later time, use <a class="el" href="../../dc/db7/group__kernel__interface.html#ga887aaf8e03b09ec2e566d807e8a0a898">kn_suspend</a>.</p>
-<dl class="section warning"><dt>Warning</dt><dd>If kn_disable is the calling thread, this function does not return. </dd></dl>
+<p>Disables the specified thread. After a thread has been disabled, you must call <a class="el" href="../../dc/db7/group__kernel__interface.html#ga8eaa4ca4aeefdcb5e1e4d610012ae97a">kn_create_thread</a> to restart it or replace it with a new thread. If you wish to "pause" a thread with the ability to resume it at a later time, use <a class="el" href="../../dc/db7/group__kernel__interface.html#ga887aaf8e03b09ec2e566d807e8a0a898">kn_suspend</a>.</p>
+<dl class="section warning"><dt>Warning</dt><dd>If t_id is the calling thread, this function does not return. </dd></dl>
 
 </div>
 </div>
@@ -654,7 +673,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section warning"><dt>Warning</dt><dd>If you return from this thread, the kernel scheduler will attempt to continue, but you do so at your own risk. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>If you return from this function, the kernel scheduler will attempt to continue, but you do so at your own risk. </dd></dl>
 
 </div>
 </div>
@@ -772,7 +791,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Jul 11 2014 17:57:03 for avr-kernel by
+    <li class="footer">Generated on Sat Jul 12 2014 17:35:22 for avr-kernel by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

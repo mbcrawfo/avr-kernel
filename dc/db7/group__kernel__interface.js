@@ -1,5 +1,6 @@
 var group__kernel__interface =
 [
+    [ "kn_assert", "dc/db7/group__kernel__interface.html#ga14468a966905fc254caa971cd60c4039", null ],
     [ "THREAD0", "dc/db7/group__kernel__interface.html#gae6f7bae0af6ceebb3053cc1649949a30", null ],
     [ "THREAD1", "dc/db7/group__kernel__interface.html#ga56d183662f011ae63c927456b658bb68", null ],
     [ "THREAD2", "dc/db7/group__kernel__interface.html#ga4622ae33f020243dbb8f5a432e51bedd", null ],
