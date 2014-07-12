@@ -184,6 +184,10 @@ extern void kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point,
  */
 static void kn_init() __attribute__((naked, section(".init8"), used));
 
+/**
+ * @}
+ */
+
 /******************************************************************************
  * Local function definitions
  *****************************************************************************/
@@ -191,8 +195,8 @@ static void kn_init() __attribute__((naked, section(".init8"), used));
 void kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point, 
                            const bool suspended, void* arg)
 {
-  KERNEL_ASSERT(t_id < MAX_THREADS);
-  KERNEL_ASSERT(entry_point != NULL);
+  kn_assert(t_id < MAX_THREADS);
+  kn_assert(entry_point != NULL);
   
   // set the initial state of the thread's stack
   // the stack is set up so that the scheduler "returns" to the bootstrap 
@@ -329,13 +333,13 @@ uint32_t kn_millis()
 
 bool kn_thread_enabled(const thread_id t_id)
 {
-  KERNEL_ASSERT(t_id < MAX_THREADS);
+  kn_assert(t_id < MAX_THREADS);
   return (kn_disabled_threads & bit_to_mask(t_id)) == 0;
 }
 
 bool kn_thread_suspended(const thread_id t_id)
 {
-  KERNEL_ASSERT(t_id < MAX_THREADS);
+  kn_assert(t_id < MAX_THREADS);
   uint8_t mask = bit_to_mask(t_id);
   return ((kn_disabled_threads & mask) == 0) &&
          ((kn_suspended_threads & mask) != 0);
@@ -343,7 +347,7 @@ bool kn_thread_suspended(const thread_id t_id)
 
 bool kn_thread_sleeping(const thread_id t_id)
 {
-  KERNEL_ASSERT(t_id < MAX_THREADS); 
+  kn_assert(t_id < MAX_THREADS); 
   uint8_t mask = bit_to_mask(t_id);
   return ((kn_disabled_threads & mask) == 0) &&
          ((kn_sleeping_threads & mask) != 0);
@@ -351,7 +355,7 @@ bool kn_thread_sleeping(const thread_id t_id)
 
 void kn_disable(const thread_id t_id)
 {
-  KERNEL_ASSERT(t_id < MAX_THREADS);
+  kn_assert(t_id < MAX_THREADS);
   kn_disabled_threads |= bit_to_mask(t_id);
   if (t_id == kn_cur_thread)
   {
@@ -361,23 +365,19 @@ void kn_disable(const thread_id t_id)
 
 void kn_resume(const thread_id t_id)
 {
-  KERNEL_ASSERT(t_id < MAX_THREADS);
+  kn_assert(t_id < MAX_THREADS);
   kn_suspended_threads &= ~bit_to_mask(t_id);
 }
 
 void kn_suspend(const thread_id t_id)
 {
-  KERNEL_ASSERT(t_id < MAX_THREADS);
+  kn_assert(t_id < MAX_THREADS);
   kn_suspended_threads |= bit_to_mask(t_id);
   if (t_id == kn_cur_thread)
   {
     kn_yield();
   }
 }
-
-/**
- * @}
- */
 
 /******************************************************************************
  * Interrupts

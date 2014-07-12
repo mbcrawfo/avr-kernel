@@ -40,7 +40,7 @@
  */
 
 /**
- * The clock speed of the MCU as used by _delay_ms and so on.
+ * The clock speed of the MCU as used by \c _delay_ms and so on.
  */
 #define F_CPU 16000000
 
@@ -53,9 +53,7 @@
 /**
  * The maximum number of threads that may be enabled simultaneously.  Valid
  * thread id's to use will be from \ref THREAD0 to 
- * <tt>THREAD[MAX_THREADS - 1]</tt>.
- * 
- * \note Value must be in the range [1,8].
+ * <tt>THREAD[MAX_THREADS - 1]</tt>.  Value must be in the range [1,8].
  */
 #define MAX_THREADS 8
 
@@ -67,9 +65,8 @@
 #define KERNEL_USE_STACK_CANARY
 
 /**
- * The canary value used if \ref KERNEL_USE_STACK_CANARY is defined.
- * 
- * \note Must be a 1 byte value.
+ * The canary value used if \ref KERNEL_USE_STACK_CANARY is defined.  Must be a 
+ * 1 byte value.
  */
 #define STACK_CANARY 0xAA
 

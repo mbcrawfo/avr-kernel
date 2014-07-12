@@ -28,6 +28,9 @@
  * for 8 threads, the kernel uses 41 bytes of RAM and around 1 KB of program 
  * memory.
  * 
+ * See \ref kernel_config for the user-configurable options available, and 
+ * \ref kernel_interface for the main interface.
+ * 
  * The kernel uses a fairly basic round-robin cooperative scheduler.  Each 
  * thread "owns" the processor and must yield to the kernel so that other 
  * threads may execute. After all of the other ready threads have been given a 
@@ -36,27 +39,35 @@
  * the thread will be executed again.
  * 
  * Threads exist in one of four possible states:
- * -# \b Disabled  A disabled thread is totally inactive and exists in an 
- *    invalid state.  It will not execute until a new thread is created in its 
- *    place.  Initially, the \c main function is entered as \c THREAD0, and all 
- *    other threads are disabled.
- * -# \b Suspended A suspended thread exists in a valid state, but it does not 
- *    execute.  The thread must be resumed from another thread or an interrupt 
- *    to allow execution to continue.
+ * -# \b Disabled  The thread is totally inactive and exists in an invalid 
+ *    state.  It will not execute until a new thread is created in its place.  
+ *    Initially, the \c main function is entered as \c THREAD0, and all other 
+ *    threads are disabled.
+ * -# \b Suspended The thread exists in a valid state, but it does not execute. 
+ *    The thread must be resumed from another thread or an interrupt to allow 
+ *    execution to continue.
  * -# \b Sleeping  Sleeping threads exist in a valid state, but their execution 
  *    is suspended and they will automatically be resumed by the kernel when 
- *    their sleep time has expired.
+ *    their sleep time is elapsed.
  * -# \b Active  A thread that is not in any of the above states is active, and 
  *    will be executed by the kernel scheduler.
  * 
  * Each thread runs on its own stack, and the stack size for each thread may 
  * be configured in the kernel options.  However, kernel functions and 
  * interrupts are both executed on the stack of the thread that is active when 
- * they are called.
+ * they are called.  If you wish to use \c malloc when using this kernel, you 
+ * will need to include \c core/stacks.h, and set <tt>__malloc_heap_end = 
+ * RAMEND - TOTAL_STACK_SIZE</tt> early in your program initialization 
+ * (see http://www.nongnu.org/avr-libc/user-manual/malloc.html).
  * 
  * Kernel initialization occurs automatically before \c main is called.  The 
  * only user action necessary is to enable interrupts, as the kernel uses 
  * \c Timer0 to provide a millisecond counter and implement the sleep functions.
+ * 
+ * To assist with debugging, the user may enable canary values to detect when 
+ * a thread has overflowed its stack.  Additionally an assertion macro may 
+ * be enabled to provide error checking for the parameters of the kernel 
+ * functions. 
  */
 
 #ifndef KERNEL_H_
@@ -98,8 +109,8 @@ typedef uint8_t thread_id;
  * unnecessary stack usage, thread functions should be given the gcc attribute 
  * \c OS_task. While thread functions do not need to worry about saving or 
  * restoring any registers, it is not recommended to give them the \c naked 
- * attribute, because the compiler may generate code that assumes a prologue 
- * has set up the stack.
+ * attribute, because the compiler may generate code that assumes the stack has 
+ * been set up by a function prologue.
  * 
  * \param[in] my_id The thread id of this thread.
  * \param[in] arg A parameter to pass information to the thread.
@@ -185,12 +196,12 @@ extern bool kn_thread_suspended(const thread_id t_id);
 extern bool kn_thread_sleeping(const thread_id t_id);
 
 /**
- * Disables the specified thread. If \c t_id is invalid, does nothing. After a 
- * thread has been disabled, you must call \ref kn_create_thread to restart it 
- * or replace it with a new thread. If you wish to "pause" a thread with the 
- * ability to resume it at a later time, use \ref kn_suspend.
+ * Disables the specified thread. After a thread has been disabled, you must 
+ * call \ref kn_create_thread to restart it or replace it with a new thread. If 
+ * you wish to "pause" a thread with the ability to resume it at a later time, 
+ * use \ref kn_suspend.
  * 
- * \warning If kn_disable is the calling thread, this function does not return.
+ * \warning If t_id is the calling thread, this function does not return.
  */
 extern void kn_disable(const thread_id t_id);
 
@@ -235,7 +246,31 @@ static inline void kn_suspend_self();
  */
 static inline uint8_t bit_to_mask(uint8_t bit_num) __attribute__((pure));
 
+#ifdef KERNEL_USE_STACK_CANARY
+/**
+ * A user supplied function that is called when a stack overflow is detected. 
+ * Used only if \ref KERNEL_USE_STACK_CANARY is defined.
+ * 
+ * \param[in] t_id The id of the active thread when the stack overflow was 
+ * detected. This does not necessarily mean that corruption is limited to this 
+ * thread's stack.
+ * 
+ * \warning If you return from this function, the kernel scheduler will attempt 
+ * to continue, but you do so at your own risk.
+ */
+extern void kn_stack_overflow(const thread_id t_id);
+#endif
+
 #ifdef KERNEL_USE_ASSERT
+/**
+ * If the given expression evaluates to false, calls \ref kn_assertion_failure.
+ */
+#define kn_assert(expr) \
+  do { \
+    if (!(expr)) \
+      kn_assertion_failure(#expr, __FILE__, __BASE_FILE__, __LINE__); \
+  } while (0)
+    
 /**
  * A user supplied function that is called when an assertion fails. Used only 
  * if \ref KERNEL_USE_ASSERT is defined.
@@ -250,21 +285,9 @@ static inline uint8_t bit_to_mask(uint8_t bit_num) __attribute__((pure));
  */
 extern void kn_assertion_failure(const char* expr, const char* file,
                                  const char* base_file, const int line);
-#endif
 
-#ifdef KERNEL_USE_STACK_CANARY
-/**
- * A user supplied function that is called when a stack overflow is detected. 
- * Used only if \ref KERNEL_USE_STACK_CANARY is defined.
- * 
- * \param[in] t_id The id of the active thread when the stack overflow was 
- * detected. This does not necessarily mean that corruption is limited to this 
- * thread's stack.
- * 
- * \warning If you return from this thread, the kernel scheduler will attempt 
- * to continue, but you do so at your own risk.
- */
-extern void kn_stack_overflow(const thread_id t_id);
+#else
+  #define kn_assert(expr) ((void)0)
 #endif
 
 /**
@@ -272,18 +295,8 @@ extern void kn_stack_overflow(const thread_id t_id);
  */
 
 /** \cond */
-#ifndef NULL  
+#ifndef NULL
   #define NULL ((void*)0)
-#endif
-
-#ifdef KERNEL_USE_ASSERT
-  #define KERNEL_ASSERT(expr) \
-    do { \
-      if (!(expr)) \
-        kn_assertion_failure(#expr, __FILE__, __BASE_FILE__, __LINE__); \
-    } while (0)
-#else
-  #define KERNEL_ASSERT(expr) ((void)0)
 #endif
 /** \endcond */
 
