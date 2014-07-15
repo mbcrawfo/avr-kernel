@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['kn_5fassertion_5ffailure',['kn_assertion_failure',['../dc/db7/group__kernel__interface.html#ga876fe03d3b4b2c2fdad92930223cb376',1,'kernel.h']]],
+  ['kn_5fassertion_5ffailure',['kn_assertion_failure',['../dc/db7/group__kernel__interface.html#ga876fe03d3b4b2c2fdad92930223cb376',1,'kernel_debug.h']]],
   ['kn_5fcreate_5fthread',['kn_create_thread',['../dc/db7/group__kernel__interface.html#ga8eaa4ca4aeefdcb5e1e4d610012ae97a',1,'kernel.h']]],
   ['kn_5fcreate_5fthread_5fimpl',['kn_create_thread_impl',['../d5/d45/group__kernel__implementation.html#ga6228dcb54ba246b85276aaeed56688a9',1,'kernel.c']]],
   ['kn_5fcurrent_5fthread',['kn_current_thread',['../dc/db7/group__kernel__interface.html#ga43578b0e74b0b22d2c892acf91a590af',1,'kn_current_thread():&#160;kernel-inl.h'],['../dc/db7/group__kernel__interface.html#ga43578b0e74b0b22d2c892acf91a590af',1,'kn_current_thread():&#160;kernel-inl.h']]],
@@ -13,7 +13,7 @@ var searchData=
   ['kn_5fscheduler',['kn_scheduler',['../d5/d45/group__kernel__implementation.html#ga23024ae76583026f2c52c25873311d19',1,'kernel.c']]],
   ['kn_5fsleep',['kn_sleep',['../dc/db7/group__kernel__interface.html#ga19cfee4ebc5034e03a232fdad3d55736',1,'kn_sleep(const uint16_t millis):&#160;kernel.c'],['../dc/db7/group__kernel__interface.html#ga19cfee4ebc5034e03a232fdad3d55736',1,'kn_sleep(const uint16_t millis):&#160;kernel.c']]],
   ['kn_5fsleep_5flong',['kn_sleep_long',['../dc/db7/group__kernel__interface.html#ga5a904aeba36b3882eae1dc3489963f8a',1,'kn_sleep_long(uint32_t millis):&#160;kernel.c'],['../dc/db7/group__kernel__interface.html#ga5a904aeba36b3882eae1dc3489963f8a',1,'kn_sleep_long(uint32_t millis):&#160;kernel.c']]],
-  ['kn_5fstack_5foverflow',['kn_stack_overflow',['../dc/db7/group__kernel__interface.html#ga9bc169495785af2f011f91237857285d',1,'kernel.h']]],
+  ['kn_5fstack_5foverflow',['kn_stack_overflow',['../dc/db7/group__kernel__interface.html#ga9bc169495785af2f011f91237857285d',1,'kernel_debug.h']]],
   ['kn_5fsuspend',['kn_suspend',['../dc/db7/group__kernel__interface.html#ga887aaf8e03b09ec2e566d807e8a0a898',1,'kn_suspend(const thread_id t_id):&#160;kernel.c'],['../dc/db7/group__kernel__interface.html#ga887aaf8e03b09ec2e566d807e8a0a898',1,'kn_suspend(const thread_id t_id):&#160;kernel.c']]],
   ['kn_5fsuspend_5fself',['kn_suspend_self',['../dc/db7/group__kernel__interface.html#ga431eeca3a1ff7e15833bd2a31cea9d3f',1,'kn_suspend_self():&#160;kernel-inl.h'],['../dc/db7/group__kernel__interface.html#ga431eeca3a1ff7e15833bd2a31cea9d3f',1,'kn_suspend_self():&#160;kernel-inl.h']]],
   ['kn_5fthread_5fbootstrap',['kn_thread_bootstrap',['../d5/d45/group__kernel__implementation.html#ga823b6660be7ce9827a9e1009b086c303',1,'kernel.c']]],

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.7"/>
-<title>avr-kernel: kernel/config.h Source File</title>
+<title>avr-kernel: kernel/util.h Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('db/d16/config_8h_source.html','../../');});
+$(document).ready(function(){initNavTree('d8/d3c/util_8h_source.html','../../');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -101,10 +101,10 @@ $(document).ready(function(){initNavTree('db/d16/config_8h_source.html','../../'
 
 <div class="header">
   <div class="headertitle">
-<div class="title">config.h</div>  </div>
+<div class="title">util.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="../../db/d16/config_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/******************************************************************************</span></div>
+<a href="../../d8/d3c/util_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/******************************************************************************</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">  avr-kernel</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">  Copyright (C) 2014 Michael Crawford</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"></span></div>
@@ -123,42 +123,32 @@ $(document).ready(function(){initNavTree('db/d16/config_8h_source.html','../../'
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">******************************************************************************/</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#ifndef CONFIG_H_</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#define CONFIG_H_</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#ifndef UTIL_H_</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define UTIL_H_</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="../../d4/d05/kernel__types_8h.html">kernel_types.h</a>&quot;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="../../d6/db0/kernel__debug_8h.html">kernel_debug.h</a>&quot;</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="../../d1/d3f/group__kernel__config.html#ga43bafb28b29491ec7f871319b5a3b2f8">   45</a></span>&#160;<span class="preprocessor">#define F_CPU 16000000</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="../../d1/d3f/group__kernel__config.html#ga19d8034ae5c1ff39fb189f691ddada0a">   51</a></span>&#160;<span class="preprocessor">#define KERNEL_USE_ASSERT</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="../../d1/d3f/group__kernel__config.html#ga8b5173357adb02a86c027316e0acdfa0">   58</a></span>&#160;<span class="preprocessor">#define MAX_THREADS 8</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="../../d1/d3f/group__kernel__config.html#ga1a5cecc6feace3071fa6b632c242d446">   65</a></span>&#160;<span class="preprocessor">#define KERNEL_USE_STACK_CANARY</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="../../d1/d3f/group__kernel__config.html#gaaf4bc0f6929ec6fd223b829a0d3ecaa3">   71</a></span>&#160;<span class="preprocessor">#define STACK_CANARY 0xAA</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="../../d7/d04/group__stack__size.html#ga2528e4df122753385c01aedd74911a63">  100</a></span>&#160;<span class="preprocessor">#define THREAD0_STACK_SIZE 64</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="../../d7/d04/group__stack__size.html#gaa05bbc7aa58892b57946c4853b28f71d">  102</a></span>&#160;<span class="preprocessor">#define THREAD1_STACK_SIZE 64</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
-<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="../../d7/d04/group__stack__size.html#gadc96f5bc7c94330139e4618e8a7c4e1d">  104</a></span>&#160;<span class="preprocessor">#define THREAD2_STACK_SIZE 64</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
-<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="../../d7/d04/group__stack__size.html#ga7a5689e49fe468bfeb6365d773f045b5">  106</a></span>&#160;<span class="preprocessor">#define THREAD3_STACK_SIZE 64</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="../../d7/d04/group__stack__size.html#gab75fae614aa2a959a4259654a1ac4dce">  108</a></span>&#160;<span class="preprocessor">#define THREAD4_STACK_SIZE 64</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
-<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="../../d7/d04/group__stack__size.html#ga1c81f24df1b4d8887dc7f7a2ade4db88">  110</a></span>&#160;<span class="preprocessor">#define THREAD5_STACK_SIZE 64</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
-<div class="line"><a name="l00112"></a><span class="lineno"><a class="line" href="../../d7/d04/group__stack__size.html#ga0280ba0ac627babdba996e84f452ee3e">  112</a></span>&#160;<span class="preprocessor">#define THREAD6_STACK_SIZE 64</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
-<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="../../d7/d04/group__stack__size.html#ga6be381a06283e75a9067a1470626fbba">  114</a></span>&#160;<span class="preprocessor">#define THREAD7_STACK_SIZE 64</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> uint8_t <a class="code" href="../../d8/d3c/util_8h.html#a3fc5ebda60a0bd46304616d67496b8a6">bit_to_mask</a>(uint8_t bit_num) __attribute__((pure));</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="../../d8/d3c/util_8h.html#a3fc5ebda60a0bd46304616d67496b8a6">   41</a></span>&#160;uint8_t <a class="code" href="../../d8/d3c/util_8h.html#a3fc5ebda60a0bd46304616d67496b8a6">bit_to_mask</a>(uint8_t bit_num)</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;{</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keyword">extern</span> <span class="keyword">const</span> uint8_t <a class="code" href="../../d5/d45/group__kernel__implementation.html#ga4560b7972abb50915aa9c0c9b97766d3">kn_bitmasks</a>[8] PROGMEM;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <a class="code" href="../../dc/db7/group__kernel__interface.html#ga14468a966905fc254caa971cd60c4039">kn_assert</a>(bit_num &lt; 8);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordflow">return</span> pgm_read_byte(&amp;<a class="code" href="../../d5/d45/group__kernel__implementation.html#ga4560b7972abb50915aa9c0c9b97766d3">kn_bitmasks</a>[bit_num]);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="kernel__types_8h_html"><div class="ttname"><a href="../../d4/d05/kernel__types_8h.html">kernel_types.h</a></div><div class="ttdoc">Contains type definitions used by the kernel. </div></div>
+<div class="ttc" id="util_8h_html_a3fc5ebda60a0bd46304616d67496b8a6"><div class="ttname"><a href="../../d8/d3c/util_8h.html#a3fc5ebda60a0bd46304616d67496b8a6">bit_to_mask</a></div><div class="ttdeci">static uint8_t bit_to_mask(uint8_t bit_num)</div><div class="ttdef"><b>Definition:</b> util.h:41</div></div>
+<div class="ttc" id="group__kernel__interface_html_ga14468a966905fc254caa971cd60c4039"><div class="ttname"><a href="../../dc/db7/group__kernel__interface.html#ga14468a966905fc254caa971cd60c4039">kn_assert</a></div><div class="ttdeci">#define kn_assert(expr)</div><div class="ttdef"><b>Definition:</b> kernel_debug.h:54</div></div>
+<div class="ttc" id="kernel__debug_8h_html"><div class="ttname"><a href="../../d6/db0/kernel__debug_8h.html">kernel_debug.h</a></div><div class="ttdoc">Contains debugging tools. </div></div>
+<div class="ttc" id="group__kernel__implementation_html_ga4560b7972abb50915aa9c0c9b97766d3"><div class="ttname"><a href="../../d5/d45/group__kernel__implementation.html#ga4560b7972abb50915aa9c0c9b97766d3">kn_bitmasks</a></div><div class="ttdeci">const uint8_t kn_bitmasks[8]</div><div class="ttdef"><b>Definition:</b> kernel.c:45</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_dc43877d82dd332f9fb2071fcca799d6.html">kernel</a></li><li class="navelem"><a class="el" href="../../db/d16/config_8h.html">config.h</a></li>
+    <li class="navelem"><a class="el" href="../../dir_dc43877d82dd332f9fb2071fcca799d6.html">kernel</a></li><li class="navelem"><a class="el" href="../../d8/d3c/util_8h.html">util.h</a></li>
     <li class="footer">Generated on Tue Jul 15 2014 15:05:08 for avr-kernel by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.7 </li>

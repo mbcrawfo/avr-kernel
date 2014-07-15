@@ -1,17 +1,8 @@
 var group__kernel__interface =
 [
     [ "kn_assert", "dc/db7/group__kernel__interface.html#ga14468a966905fc254caa971cd60c4039", null ],
-    [ "THREAD0", "dc/db7/group__kernel__interface.html#gae6f7bae0af6ceebb3053cc1649949a30", null ],
-    [ "THREAD1", "dc/db7/group__kernel__interface.html#ga56d183662f011ae63c927456b658bb68", null ],
-    [ "THREAD2", "dc/db7/group__kernel__interface.html#ga4622ae33f020243dbb8f5a432e51bedd", null ],
-    [ "THREAD3", "dc/db7/group__kernel__interface.html#ga2944f346f29c7a22dafc50c5d23ddbf3", null ],
-    [ "THREAD4", "dc/db7/group__kernel__interface.html#ga0a783ce4efaf0d6eeb59427b48567c1b", null ],
-    [ "THREAD5", "dc/db7/group__kernel__interface.html#ga0c37ca94795adb255f415defd54055fe", null ],
-    [ "THREAD6", "dc/db7/group__kernel__interface.html#gad8aecb01033bf810862d0d857fda1a59", null ],
-    [ "THREAD7", "dc/db7/group__kernel__interface.html#ga58a28bc368771922ec0209445c78681c", null ],
-    [ "thread_id", "dc/db7/group__kernel__interface.html#ga03be26510f0df885554807417112eddb", null ],
     [ "thread_ptr", "dc/db7/group__kernel__interface.html#ga21d62fdf6889411bc5d9d848e84479a3", null ],
-    [ "bit_to_mask", "dc/db7/group__kernel__interface.html#ga6eb0767d8918b91d1a1badae113beeab", null ],
+    [ "thread_id", "dc/db7/group__kernel__interface.html#ga53f8f420531828f6ea7ed91ea6b2fa97", null ],
     [ "kn_assertion_failure", "dc/db7/group__kernel__interface.html#ga876fe03d3b4b2c2fdad92930223cb376", null ],
     [ "kn_create_thread", "dc/db7/group__kernel__interface.html#ga8eaa4ca4aeefdcb5e1e4d610012ae97a", null ],
     [ "kn_current_thread", "dc/db7/group__kernel__interface.html#ga43578b0e74b0b22d2c892acf91a590af", null ],

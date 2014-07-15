@@ -7,13 +7,14 @@
 
 var indexSectionsWithContent =
 {
-  0: "bcfikmost",
-  1: "cks",
+  0: "bcfikmostu",
+  1: "cksu",
   2: "bk",
   3: "k",
   4: "t",
-  5: "kt",
-  6: "o"
+  5: "t",
+  6: "kt",
+  7: "o"
 };
 
 var indexSectionNames =
@@ -23,8 +24,9 @@ var indexSectionNames =
   2: "functions",
   3: "variables",
   4: "typedefs",
-  5: "groups",
-  6: "pages"
+  5: "enums",
+  6: "groups",
+  7: "pages"
 };
 
 function convertToId(search)

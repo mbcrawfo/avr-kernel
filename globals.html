@@ -76,6 +76,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="globals_func.html"><span>Functions</span></a></li>
       <li><a href="globals_vars.html"><span>Variables</span></a></li>
       <li><a href="globals_type.html"><span>Typedefs</span></a></li>
+      <li><a href="globals_enum.html"><span>Enumerations</span></a></li>
       <li><a href="globals_defs.html"><span>Macros</span></a></li>
     </ul>
   </div>
@@ -110,7 +111,7 @@ $(document).ready(function(){initNavTree('globals.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -124,8 +125,7 @@ $(document).ready(function(){initNavTree('globals.html','');});
 
 <h3><a class="anchor" id="index_b"></a>- b -</h3><ul>
 <li>bit_to_mask()
-: <a class="el" href="dc/db7/group__kernel__interface.html#ga6eb0767d8918b91d1a1badae113beeab">kernel-inl.h</a>
-, <a class="el" href="dc/db7/group__kernel__interface.html#ga6eb0767d8918b91d1a1badae113beeab">kernel.h</a>
+: <a class="el" href="d8/d3c/util_8h.html#a3fc5ebda60a0bd46304616d67496b8a6">util.h</a>
 </li>
 </ul>
 
@@ -152,10 +152,10 @@ $(document).ready(function(){initNavTree('globals.html','');});
 : <a class="el" href="d1/d3f/group__kernel__config.html#ga1a5cecc6feace3071fa6b632c242d446">config.h</a>
 </li>
 <li>kn_assert
-: <a class="el" href="dc/db7/group__kernel__interface.html#ga14468a966905fc254caa971cd60c4039">kernel.h</a>
+: <a class="el" href="dc/db7/group__kernel__interface.html#ga14468a966905fc254caa971cd60c4039">kernel_debug.h</a>
 </li>
 <li>kn_assertion_failure()
-: <a class="el" href="dc/db7/group__kernel__interface.html#ga876fe03d3b4b2c2fdad92930223cb376">kernel.h</a>
+: <a class="el" href="dc/db7/group__kernel__interface.html#ga876fe03d3b4b2c2fdad92930223cb376">kernel_debug.h</a>
 </li>
 <li>kn_bitmasks
 : <a class="el" href="d5/d45/group__kernel__implementation.html#ga4560b7972abb50915aa9c0c9b97766d3">kernel.c</a>
@@ -229,7 +229,7 @@ $(document).ready(function(){initNavTree('globals.html','');});
 : <a class="el" href="d5/d45/group__kernel__implementation.html#ga494844fa496dc84cd3fbdde2ef7864a1">kernel.c</a>
 </li>
 <li>kn_stack_overflow()
-: <a class="el" href="dc/db7/group__kernel__interface.html#ga9bc169495785af2f011f91237857285d">kernel.h</a>
+: <a class="el" href="dc/db7/group__kernel__interface.html#ga9bc169495785af2f011f91237857285d">kernel_debug.h</a>
 </li>
 <li>kn_suspend()
 : <a class="el" href="dc/db7/group__kernel__interface.html#ga887aaf8e03b09ec2e566d807e8a0a898">kernel.c</a>
@@ -287,9 +287,6 @@ $(document).ready(function(){initNavTree('globals.html','');});
 
 
 <h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
-<li>THREAD0
-: <a class="el" href="dc/db7/group__kernel__interface.html#gae6f7bae0af6ceebb3053cc1649949a30">kernel.h</a>
-</li>
 <li>THREAD0_CANARY_LOC
 : <a class="el" href="d5/d45/group__kernel__implementation.html#gacf2ba3b39c1dc58b88cef6c99aec0954">stacks.h</a>
 </li>
@@ -298,9 +295,6 @@ $(document).ready(function(){initNavTree('globals.html','');});
 </li>
 <li>THREAD0_STACK_SIZE
 : <a class="el" href="d7/d04/group__stack__size.html#ga2528e4df122753385c01aedd74911a63">config.h</a>
-</li>
-<li>THREAD1
-: <a class="el" href="dc/db7/group__kernel__interface.html#ga56d183662f011ae63c927456b658bb68">kernel.h</a>
 </li>
 <li>THREAD1_CANARY_LOC
 : <a class="el" href="d5/d45/group__kernel__implementation.html#ga2d63517b1a583da1cfbb3115c58a22ac">stacks.h</a>
@@ -311,9 +305,6 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>THREAD1_STACK_SIZE
 : <a class="el" href="d7/d04/group__stack__size.html#gaa05bbc7aa58892b57946c4853b28f71d">config.h</a>
 </li>
-<li>THREAD2
-: <a class="el" href="dc/db7/group__kernel__interface.html#ga4622ae33f020243dbb8f5a432e51bedd">kernel.h</a>
-</li>
 <li>THREAD2_CANARY_LOC
 : <a class="el" href="d5/d45/group__kernel__implementation.html#ga07eab1fa029fb35a82d826792a1358bf">stacks.h</a>
 </li>
@@ -322,9 +313,6 @@ $(document).ready(function(){initNavTree('globals.html','');});
 </li>
 <li>THREAD2_STACK_SIZE
 : <a class="el" href="d7/d04/group__stack__size.html#gadc96f5bc7c94330139e4618e8a7c4e1d">config.h</a>
-</li>
-<li>THREAD3
-: <a class="el" href="dc/db7/group__kernel__interface.html#ga2944f346f29c7a22dafc50c5d23ddbf3">kernel.h</a>
 </li>
 <li>THREAD3_CANARY_LOC
 : <a class="el" href="d5/d45/group__kernel__implementation.html#gaccb4e46ba0b433c2b22b721653f41077">stacks.h</a>
@@ -335,9 +323,6 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>THREAD3_STACK_SIZE
 : <a class="el" href="d7/d04/group__stack__size.html#ga7a5689e49fe468bfeb6365d773f045b5">config.h</a>
 </li>
-<li>THREAD4
-: <a class="el" href="dc/db7/group__kernel__interface.html#ga0a783ce4efaf0d6eeb59427b48567c1b">kernel.h</a>
-</li>
 <li>THREAD4_CANARY_LOC
 : <a class="el" href="d5/d45/group__kernel__implementation.html#ga765994ebb9af2a5ffbaef7f5e30dee2f">stacks.h</a>
 </li>
@@ -346,9 +331,6 @@ $(document).ready(function(){initNavTree('globals.html','');});
 </li>
 <li>THREAD4_STACK_SIZE
 : <a class="el" href="d7/d04/group__stack__size.html#gab75fae614aa2a959a4259654a1ac4dce">config.h</a>
-</li>
-<li>THREAD5
-: <a class="el" href="dc/db7/group__kernel__interface.html#ga0c37ca94795adb255f415defd54055fe">kernel.h</a>
 </li>
 <li>THREAD5_CANARY_LOC
 : <a class="el" href="d5/d45/group__kernel__implementation.html#ga3b7e81a597f7170808cb0d720fdeec4d">stacks.h</a>
@@ -359,9 +341,6 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>THREAD5_STACK_SIZE
 : <a class="el" href="d7/d04/group__stack__size.html#ga1c81f24df1b4d8887dc7f7a2ade4db88">config.h</a>
 </li>
-<li>THREAD6
-: <a class="el" href="dc/db7/group__kernel__interface.html#gad8aecb01033bf810862d0d857fda1a59">kernel.h</a>
-</li>
 <li>THREAD6_CANARY_LOC
 : <a class="el" href="d5/d45/group__kernel__implementation.html#ga704142693b36afe8554f423c8d1da31a">stacks.h</a>
 </li>
@@ -370,9 +349,6 @@ $(document).ready(function(){initNavTree('globals.html','');});
 </li>
 <li>THREAD6_STACK_SIZE
 : <a class="el" href="d7/d04/group__stack__size.html#ga0280ba0ac627babdba996e84f452ee3e">config.h</a>
-</li>
-<li>THREAD7
-: <a class="el" href="dc/db7/group__kernel__interface.html#ga58a28bc368771922ec0209445c78681c">kernel.h</a>
 </li>
 <li>THREAD7_CANARY_LOC
 : <a class="el" href="d5/d45/group__kernel__implementation.html#ga2af7c75e45b1ad3ed543d1d955364b0d">stacks.h</a>
@@ -384,10 +360,10 @@ $(document).ready(function(){initNavTree('globals.html','');});
 : <a class="el" href="d7/d04/group__stack__size.html#ga6be381a06283e75a9067a1470626fbba">config.h</a>
 </li>
 <li>thread_id
-: <a class="el" href="dc/db7/group__kernel__interface.html#ga03be26510f0df885554807417112eddb">kernel.h</a>
+: <a class="el" href="dc/db7/group__kernel__interface.html#ga53f8f420531828f6ea7ed91ea6b2fa97">kernel_types.h</a>
 </li>
 <li>thread_ptr
-: <a class="el" href="dc/db7/group__kernel__interface.html#ga21d62fdf6889411bc5d9d848e84479a3">kernel.h</a>
+: <a class="el" href="dc/db7/group__kernel__interface.html#ga21d62fdf6889411bc5d9d848e84479a3">kernel_types.h</a>
 </li>
 <li>TOTAL_RAM_SIZE
 : <a class="el" href="d5/d45/group__kernel__implementation.html#gacada75d4241c8e64de76435f9a1c13a5">stacks.h</a>
@@ -401,7 +377,7 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sat Jul 12 2014 17:35:22 for avr-kernel by
+    <li class="footer">Generated on Tue Jul 15 2014 15:05:08 for avr-kernel by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

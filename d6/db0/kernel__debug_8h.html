@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.7"/>
-<title>avr-kernel: kernel/core/kernel-inl.h File Reference</title>
+<title>avr-kernel: kernel/kernel_debug.h File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('d7/dd3/kernel-inl_8h.html','../../');});
+$(document).ready(function(){initNavTree('d6/db0/kernel__debug_8h.html','../../');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -101,39 +101,40 @@ $(document).ready(function(){initNavTree('d7/dd3/kernel-inl_8h.html','../../');}
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">kernel-inl.h File Reference</div>  </div>
+<div class="title">kernel_debug.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Inline function definitions for the kernel. Functions which should generally compile down to a handful of assembly instructions are inlined.  
+<p>Contains debugging tools.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="../../d6/db0/kernel__debug_8h_source.html">kernel_debug.h</a>&quot;</code><br />
-<code>#include &lt;avr/pgmspace.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="../../d4/d05/kernel__types_8h_source.html">kernel_types.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../db/d16/config_8h_source.html">config.h</a>&quot;</code><br />
 </div>
-<p><a href="../../d7/dd3/kernel-inl_8h_source.html">Go to the source code of this file.</a></p>
+<p><a href="../../d6/db0/kernel__debug_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga14468a966905fc254caa971cd60c4039"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga14468a966905fc254caa971cd60c4039">kn_assert</a>(expr)</td></tr>
+<tr class="separator:ga14468a966905fc254caa971cd60c4039"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga290d4415fabdc5cca4b919152cd6db40"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga290d4415fabdc5cca4b919152cd6db40">kn_replace_self</a> (<a class="el" href="../../dc/db7/group__kernel__interface.html#ga21d62fdf6889411bc5d9d848e84479a3">thread_ptr</a> entry_point, const bool suspended, void *arg)</td></tr>
-<tr class="separator:ga290d4415fabdc5cca4b919152cd6db40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga43578b0e74b0b22d2c892acf91a590af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga53f8f420531828f6ea7ed91ea6b2fa97">thread_id</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga43578b0e74b0b22d2c892acf91a590af">kn_current_thread</a> ()</td></tr>
-<tr class="separator:ga43578b0e74b0b22d2c892acf91a590af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaacb6c78d913de211d490499cd32a43e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#gaacb6c78d913de211d490499cd32a43e9">kn_disable_self</a> ()</td></tr>
-<tr class="separator:gaacb6c78d913de211d490499cd32a43e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga431eeca3a1ff7e15833bd2a31cea9d3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga431eeca3a1ff7e15833bd2a31cea9d3f">kn_suspend_self</a> ()</td></tr>
-<tr class="separator:ga431eeca3a1ff7e15833bd2a31cea9d3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9bc169495785af2f011f91237857285d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga9bc169495785af2f011f91237857285d">kn_stack_overflow</a> (const <a class="el" href="../../dc/db7/group__kernel__interface.html#ga53f8f420531828f6ea7ed91ea6b2fa97">thread_id</a> t_id)</td></tr>
+<tr class="separator:ga9bc169495785af2f011f91237857285d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga876fe03d3b4b2c2fdad92930223cb376"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga876fe03d3b4b2c2fdad92930223cb376">kn_assertion_failure</a> (const char *expr, const char *file, const char *base_file, const int line)</td></tr>
+<tr class="separator:ga876fe03d3b4b2c2fdad92930223cb376"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Inline function definitions for the kernel. Functions which should generally compile down to a handful of assembly instructions are inlined. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../dc/db7/group__kernel__interface.html" title="Contains the public interface of the kernel. ">Kernel Interface</a> </dd></dl>
+<div class="textblock"><p>Contains debugging tools. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_dc43877d82dd332f9fb2071fcca799d6.html">kernel</a></li><li class="navelem"><a class="el" href="../../dir_5215f8c381c24c03346eeeea66185b9a.html">core</a></li><li class="navelem"><a class="el" href="../../d7/dd3/kernel-inl_8h.html">kernel-inl.h</a></li>
+    <li class="navelem"><a class="el" href="../../dir_dc43877d82dd332f9fb2071fcca799d6.html">kernel</a></li><li class="navelem"><a class="el" href="../../d6/db0/kernel__debug_8h.html">kernel_debug.h</a></li>
     <li class="footer">Generated on Tue Jul 15 2014 15:05:08 for avr-kernel by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.7 </li>

@@ -90,7 +90,7 @@ $(document).ready(function(){initNavTree('d0/daa/kernel_8h.html','../../');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -101,8 +101,6 @@ $(document).ready(function(){initNavTree('d0/daa/kernel_8h.html','../../');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">kernel.h File Reference</div>  </div>
@@ -111,44 +109,14 @@ $(document).ready(function(){initNavTree('d0/daa/kernel_8h.html','../../');});
 
 <p>Documents the main interface of the kernel.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="../../db/d16/config_8h_source.html">config.h</a>&quot;</code><br />
-<code>#include &lt;stdbool.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="../../d4/d05/kernel__types_8h_source.html">kernel_types.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d7/dd3/kernel-inl_8h_source.html">core/kernel-inl.h</a>&quot;</code><br />
 </div>
 <p><a href="../../d0/daa/kernel_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gae6f7bae0af6ceebb3053cc1649949a30"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#gae6f7bae0af6ceebb3053cc1649949a30">THREAD0</a></td></tr>
-<tr class="separator:gae6f7bae0af6ceebb3053cc1649949a30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga56d183662f011ae63c927456b658bb68"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga56d183662f011ae63c927456b658bb68">THREAD1</a></td></tr>
-<tr class="separator:ga56d183662f011ae63c927456b658bb68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4622ae33f020243dbb8f5a432e51bedd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga4622ae33f020243dbb8f5a432e51bedd">THREAD2</a></td></tr>
-<tr class="separator:ga4622ae33f020243dbb8f5a432e51bedd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2944f346f29c7a22dafc50c5d23ddbf3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga2944f346f29c7a22dafc50c5d23ddbf3">THREAD3</a></td></tr>
-<tr class="separator:ga2944f346f29c7a22dafc50c5d23ddbf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0a783ce4efaf0d6eeb59427b48567c1b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga0a783ce4efaf0d6eeb59427b48567c1b">THREAD4</a></td></tr>
-<tr class="separator:ga0a783ce4efaf0d6eeb59427b48567c1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0c37ca94795adb255f415defd54055fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga0c37ca94795adb255f415defd54055fe">THREAD5</a></td></tr>
-<tr class="separator:ga0c37ca94795adb255f415defd54055fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad8aecb01033bf810862d0d857fda1a59"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#gad8aecb01033bf810862d0d857fda1a59">THREAD6</a></td></tr>
-<tr class="separator:gad8aecb01033bf810862d0d857fda1a59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga58a28bc368771922ec0209445c78681c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga58a28bc368771922ec0209445c78681c">THREAD7</a></td></tr>
-<tr class="separator:ga58a28bc368771922ec0209445c78681c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga14468a966905fc254caa971cd60c4039"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga14468a966905fc254caa971cd60c4039">kn_assert</a>(expr)</td></tr>
-<tr class="separator:ga14468a966905fc254caa971cd60c4039"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga03be26510f0df885554807417112eddb"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga03be26510f0df885554807417112eddb">thread_id</a></td></tr>
-<tr class="separator:ga03be26510f0df885554807417112eddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga21d62fdf6889411bc5d9d848e84479a3"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga21d62fdf6889411bc5d9d848e84479a3">thread_ptr</a> )(const <a class="el" href="../../dc/db7/group__kernel__interface.html#ga03be26510f0df885554807417112eddb">thread_id</a> my_id, void *arg)</td></tr>
-<tr class="separator:ga21d62fdf6889411bc5d9d848e84479a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga8eaa4ca4aeefdcb5e1e4d610012ae97a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga8eaa4ca4aeefdcb5e1e4d610012ae97a">kn_create_thread</a> (const <a class="el" href="../../dc/db7/group__kernel__interface.html#ga03be26510f0df885554807417112eddb">thread_id</a> t_id, <a class="el" href="../../dc/db7/group__kernel__interface.html#ga21d62fdf6889411bc5d9d848e84479a3">thread_ptr</a> entry_point, const bool suspended, void *arg)</td></tr>
+<tr class="memitem:ga8eaa4ca4aeefdcb5e1e4d610012ae97a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga8eaa4ca4aeefdcb5e1e4d610012ae97a">kn_create_thread</a> (const <a class="el" href="../../dc/db7/group__kernel__interface.html#ga53f8f420531828f6ea7ed91ea6b2fa97">thread_id</a> t_id, <a class="el" href="../../dc/db7/group__kernel__interface.html#ga21d62fdf6889411bc5d9d848e84479a3">thread_ptr</a> entry_point, const bool suspended, void *arg)</td></tr>
 <tr class="separator:ga8eaa4ca4aeefdcb5e1e4d610012ae97a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga290d4415fabdc5cca4b919152cd6db40"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga290d4415fabdc5cca4b919152cd6db40">kn_replace_self</a> (<a class="el" href="../../dc/db7/group__kernel__interface.html#ga21d62fdf6889411bc5d9d848e84479a3">thread_ptr</a> entry_point, const bool suspended, void *arg)</td></tr>
 <tr class="separator:ga290d4415fabdc5cca4b919152cd6db40"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,30 +128,24 @@ Functions</h2></td></tr>
 <tr class="separator:ga5a904aeba36b3882eae1dc3489963f8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeeb599f21d12ef600089c4b976765fd7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#gaeeb599f21d12ef600089c4b976765fd7">kn_millis</a> ()</td></tr>
 <tr class="separator:gaeeb599f21d12ef600089c4b976765fd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga43578b0e74b0b22d2c892acf91a590af"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="../../dc/db7/group__kernel__interface.html#ga03be26510f0df885554807417112eddb">thread_id</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga43578b0e74b0b22d2c892acf91a590af">kn_current_thread</a> ()</td></tr>
+<tr class="memitem:ga43578b0e74b0b22d2c892acf91a590af"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="../../dc/db7/group__kernel__interface.html#ga53f8f420531828f6ea7ed91ea6b2fa97">thread_id</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga43578b0e74b0b22d2c892acf91a590af">kn_current_thread</a> ()</td></tr>
 <tr class="separator:ga43578b0e74b0b22d2c892acf91a590af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafc13a8fbe2068cc1d65d3656a4c8b2d5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#gafc13a8fbe2068cc1d65d3656a4c8b2d5">kn_thread_enabled</a> (const <a class="el" href="../../dc/db7/group__kernel__interface.html#ga03be26510f0df885554807417112eddb">thread_id</a> t_id)</td></tr>
+<tr class="memitem:gafc13a8fbe2068cc1d65d3656a4c8b2d5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#gafc13a8fbe2068cc1d65d3656a4c8b2d5">kn_thread_enabled</a> (const <a class="el" href="../../dc/db7/group__kernel__interface.html#ga53f8f420531828f6ea7ed91ea6b2fa97">thread_id</a> t_id)</td></tr>
 <tr class="separator:gafc13a8fbe2068cc1d65d3656a4c8b2d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabe3a633c52577a8612362353c572bde7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#gabe3a633c52577a8612362353c572bde7">kn_thread_suspended</a> (const <a class="el" href="../../dc/db7/group__kernel__interface.html#ga03be26510f0df885554807417112eddb">thread_id</a> t_id)</td></tr>
+<tr class="memitem:gabe3a633c52577a8612362353c572bde7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#gabe3a633c52577a8612362353c572bde7">kn_thread_suspended</a> (const <a class="el" href="../../dc/db7/group__kernel__interface.html#ga53f8f420531828f6ea7ed91ea6b2fa97">thread_id</a> t_id)</td></tr>
 <tr class="separator:gabe3a633c52577a8612362353c572bde7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5c019f51ff96e031f14b94471045b791"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga5c019f51ff96e031f14b94471045b791">kn_thread_sleeping</a> (const <a class="el" href="../../dc/db7/group__kernel__interface.html#ga03be26510f0df885554807417112eddb">thread_id</a> t_id)</td></tr>
+<tr class="memitem:ga5c019f51ff96e031f14b94471045b791"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga5c019f51ff96e031f14b94471045b791">kn_thread_sleeping</a> (const <a class="el" href="../../dc/db7/group__kernel__interface.html#ga53f8f420531828f6ea7ed91ea6b2fa97">thread_id</a> t_id)</td></tr>
 <tr class="separator:ga5c019f51ff96e031f14b94471045b791"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga025e53113a0cc04e0980dd0d114a014a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga025e53113a0cc04e0980dd0d114a014a">kn_disable</a> (const <a class="el" href="../../dc/db7/group__kernel__interface.html#ga03be26510f0df885554807417112eddb">thread_id</a> t_id)</td></tr>
+<tr class="memitem:ga025e53113a0cc04e0980dd0d114a014a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga025e53113a0cc04e0980dd0d114a014a">kn_disable</a> (const <a class="el" href="../../dc/db7/group__kernel__interface.html#ga53f8f420531828f6ea7ed91ea6b2fa97">thread_id</a> t_id)</td></tr>
 <tr class="separator:ga025e53113a0cc04e0980dd0d114a014a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaacb6c78d913de211d490499cd32a43e9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#gaacb6c78d913de211d490499cd32a43e9">kn_disable_self</a> ()</td></tr>
 <tr class="separator:gaacb6c78d913de211d490499cd32a43e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0c1570dbcd4aa239ec05e01cf4c890f0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga0c1570dbcd4aa239ec05e01cf4c890f0">kn_resume</a> (const <a class="el" href="../../dc/db7/group__kernel__interface.html#ga03be26510f0df885554807417112eddb">thread_id</a> t_id)</td></tr>
+<tr class="memitem:ga0c1570dbcd4aa239ec05e01cf4c890f0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga0c1570dbcd4aa239ec05e01cf4c890f0">kn_resume</a> (const <a class="el" href="../../dc/db7/group__kernel__interface.html#ga53f8f420531828f6ea7ed91ea6b2fa97">thread_id</a> t_id)</td></tr>
 <tr class="separator:ga0c1570dbcd4aa239ec05e01cf4c890f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga887aaf8e03b09ec2e566d807e8a0a898"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga887aaf8e03b09ec2e566d807e8a0a898">kn_suspend</a> (const <a class="el" href="../../dc/db7/group__kernel__interface.html#ga03be26510f0df885554807417112eddb">thread_id</a> t_id)</td></tr>
+<tr class="memitem:ga887aaf8e03b09ec2e566d807e8a0a898"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga887aaf8e03b09ec2e566d807e8a0a898">kn_suspend</a> (const <a class="el" href="../../dc/db7/group__kernel__interface.html#ga53f8f420531828f6ea7ed91ea6b2fa97">thread_id</a> t_id)</td></tr>
 <tr class="separator:ga887aaf8e03b09ec2e566d807e8a0a898"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga431eeca3a1ff7e15833bd2a31cea9d3f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga431eeca3a1ff7e15833bd2a31cea9d3f">kn_suspend_self</a> ()</td></tr>
 <tr class="separator:ga431eeca3a1ff7e15833bd2a31cea9d3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6eb0767d8918b91d1a1badae113beeab"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga6eb0767d8918b91d1a1badae113beeab">bit_to_mask</a> (uint8_t bit_num)</td></tr>
-<tr class="separator:ga6eb0767d8918b91d1a1badae113beeab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9bc169495785af2f011f91237857285d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga9bc169495785af2f011f91237857285d">kn_stack_overflow</a> (const <a class="el" href="../../dc/db7/group__kernel__interface.html#ga03be26510f0df885554807417112eddb">thread_id</a> t_id)</td></tr>
-<tr class="separator:ga9bc169495785af2f011f91237857285d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga876fe03d3b4b2c2fdad92930223cb376"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db7/group__kernel__interface.html#ga876fe03d3b4b2c2fdad92930223cb376">kn_assertion_failure</a> (const char *expr, const char *file, const char *base_file, const int line)</td></tr>
-<tr class="separator:ga876fe03d3b4b2c2fdad92930223cb376"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Documents the main interface of the kernel. </p>
@@ -194,7 +156,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_dc43877d82dd332f9fb2071fcca799d6.html">kernel</a></li><li class="navelem"><a class="el" href="../../d0/daa/kernel_8h.html">kernel.h</a></li>
-    <li class="footer">Generated on Sat Jul 12 2014 17:35:22 for avr-kernel by
+    <li class="footer">Generated on Tue Jul 15 2014 15:05:08 for avr-kernel by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

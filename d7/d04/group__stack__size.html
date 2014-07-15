@@ -84,7 +84,7 @@ $(document).ready(function(){initNavTree('d7/d04/group__stack__size.html','../..
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -125,7 +125,7 @@ Macros</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Configuration of stack sizes for each thread. </p>
-<p><a class="el" href="../../d7/d04/group__stack__size.html#ga2528e4df122753385c01aedd74911a63">THREAD0_STACK_SIZE</a> must always be defined. Additional macros must be defined depending on the value of <a class="el" href="../../d1/d3f/group__kernel__config.html#ga8b5173357adb02a86c027316e0acdfa0">MAX_THREADS</a>, so that there is one macro for each possible thread.</p>
+<p><code>THREAD0_STACK_SIZE</code> must always be defined. Additional macros must be defined depending on the value of <a class="el" href="../../d1/d3f/group__kernel__config.html#ga8b5173357adb02a86c027316e0acdfa0">MAX_THREADS</a>, so that there is one macro for each possible thread.</p>
 <p>The sum of the stack sizes for all threads must be less than the size of the MCU's RAM. However, realistically, you must account for the sizes of the .data and .bss segments, as well as the heap size if you intend to use dynamic allocation.</p>
 <p>The absolute minimum stack size is 25 bytes (<a class="el" href="../../d5/d45/group__kernel__implementation.html#gaf0b6cd14fe17c24299fb2dd04642b34a">INITIAL_STACK_USAGE</a>); this much space is necessary for a thread to be created, and to yield without overflowing assuming that there is no stack usage within the thread itself. To do anything useful, however, a minimum stack size of 32 bytes (<a class="el" href="../../d5/d45/group__kernel__implementation.html#gac9a8e754ddaa2697e9e675579912a15f">MIN_STACK_SIZE</a>) is enforced.</p>
 <dl class="section warning"><dt>Warning</dt><dd>If stack canaries are enabled, they reduce the usable size of each thread's stack by 1 byte. </dd></dl>
@@ -139,7 +139,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The size of the stack for <a class="el" href="../../dc/db7/group__kernel__interface.html#gae6f7bae0af6ceebb3053cc1649949a30">THREAD0</a>. </p>
+<p>The size of the stack for <code>THREAD0</code>. </p>
 
 </div>
 </div>
@@ -152,7 +152,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The size of the stack for <a class="el" href="../../dc/db7/group__kernel__interface.html#ga56d183662f011ae63c927456b658bb68">THREAD1</a>. </p>
+<p>The size of the stack for <code>THREAD1</code>. </p>
 
 </div>
 </div>
@@ -165,7 +165,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The size of the stack for <a class="el" href="../../dc/db7/group__kernel__interface.html#ga4622ae33f020243dbb8f5a432e51bedd">THREAD2</a>. </p>
+<p>The size of the stack for <code>THREAD2</code>. </p>
 
 </div>
 </div>
@@ -178,7 +178,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The size of the stack for <a class="el" href="../../dc/db7/group__kernel__interface.html#ga2944f346f29c7a22dafc50c5d23ddbf3">THREAD3</a>. </p>
+<p>The size of the stack for <code>THREAD3</code>. </p>
 
 </div>
 </div>
@@ -191,7 +191,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The size of the stack for <a class="el" href="../../dc/db7/group__kernel__interface.html#ga0a783ce4efaf0d6eeb59427b48567c1b">THREAD4</a>. </p>
+<p>The size of the stack for <code>THREAD4</code>. </p>
 
 </div>
 </div>
@@ -204,7 +204,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The size of the stack for <a class="el" href="../../dc/db7/group__kernel__interface.html#ga0c37ca94795adb255f415defd54055fe">THREAD5</a>. </p>
+<p>The size of the stack for <code>THREAD5</code>. </p>
 
 </div>
 </div>
@@ -217,7 +217,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The size of the stack for <a class="el" href="../../dc/db7/group__kernel__interface.html#gad8aecb01033bf810862d0d857fda1a59">THREAD6</a>. </p>
+<p>The size of the stack for <code>THREAD6</code>. </p>
 
 </div>
 </div>
@@ -230,7 +230,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The size of the stack for <a class="el" href="../../dc/db7/group__kernel__interface.html#ga58a28bc368771922ec0209445c78681c">THREAD7</a>. </p>
+<p>The size of the stack for <code>THREAD7</code>. </p>
 
 </div>
 </div>
@@ -239,7 +239,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sat Jul 12 2014 17:35:22 for avr-kernel by
+    <li class="footer">Generated on Tue Jul 15 2014 15:05:08 for avr-kernel by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>
