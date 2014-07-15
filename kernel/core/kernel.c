@@ -23,7 +23,10 @@
  */
 
 #include "kernel.h"
+#include "kernel_debug.h"
+#include "config.h"
 #include "stacks.h"
+#include "util.h"
 #include <avr/io.h>
 #include <avr/pgmspace.h>
 #include <util/atomic.h>
@@ -172,7 +175,7 @@ extern void kn_create_thread_impl(const thread_id t_id, thread_ptr entry_point,
 /**
  * Provides initialization of the kernel. Is automatically called in the .init8 
  * section, just before \c main() is called. When the program enters \c main() 
- * the kernel is running with only \ref THREAD0 active. The user must enable 
+ * the kernel is running with only \c THREAD0 active. The user must enable 
  * interrupts before using any of the timing features of the kernel.
  * 
  * \warning Due to the way that the linker processes symbols, this function 

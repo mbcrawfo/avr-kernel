@@ -18,49 +18,31 @@
 ******************************************************************************/
 
 /** \file
- * \brief Inline function definitions for the kernel.
- * Functions which should generally compile down to a handful of assembly 
- * instructions are inlined.
- * 
- * \see kernel_interface
+ * \brief Contains misc. utility functions.
  */
 
-#ifndef KERNEL_INL_H_
-#define KERNEL_INL_H_
+#ifndef UTIL_H_
+#define UTIL_H_
 
+#include "kernel_types.h"
 #include "kernel_debug.h"
-#include <avr/pgmspace.h>
 
-void kn_replace_self(thread_ptr entry_point, const bool suspended, void* arg)
+/**
+ * Converts a bit number to a bit mask.  For example, bit 0 produces the mask 
+ * 0x01.  Implemented using a lookup table for better performance than a loop 
+ * with bitwise operations.
+ * 
+ * \param[in] bit_num The bit number to be converted to a mask. Zero-indexed. 
+ * Valid values are in the range [0,7].
+ * 
+ * \return The bit mask corresponding to \c bit_num.
+ */
+static inline uint8_t bit_to_mask(uint8_t bit_num) __attribute__((pure));
+uint8_t bit_to_mask(uint8_t bit_num)
 {
-  extern thread_id kn_cur_thread;
-  kn_assert(entry_point != NULL);
-  kn_create_thread(kn_cur_thread, entry_point, suspended, arg);
-}
-
-thread_id kn_current_thread()
-{
-  extern thread_id kn_cur_thread;
-  return kn_cur_thread;
-}
-
-void kn_disable_self()
-{
-  extern thread_id kn_cur_thread_mask;
-  extern uint8_t kn_disabled_threads;
-  extern void kn_scheduler();
-  
-  kn_disabled_threads |= kn_cur_thread_mask;
-  kn_scheduler();
-}
-
-void kn_suspend_self()
-{
-  extern thread_id kn_cur_thread_mask;
-  extern uint8_t kn_suspended_threads;
-  
-  kn_suspended_threads |= kn_cur_thread_mask;
-  kn_yield();
+  extern const uint8_t kn_bitmasks[8] PROGMEM;
+  kn_assert(bit_num < 8);
+  return pgm_read_byte(&kn_bitmasks[bit_num]);
 }
 
 #endif

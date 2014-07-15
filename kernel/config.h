@@ -52,7 +52,7 @@
 
 /**
  * The maximum number of threads that may be enabled simultaneously.  Valid
- * thread id's to use will be from \ref THREAD0 to 
+ * thread id's to use will be from \c THREAD0 to 
  * <tt>THREAD[MAX_THREADS - 1]</tt>.  Value must be in the range [1,8].
  */
 #define MAX_THREADS 8
@@ -75,7 +75,7 @@
  * 
  * \brief Configuration of stack sizes for each thread.
  * 
- * \ref THREAD0_STACK_SIZE must always be defined.  Additional macros must be
+ * \c THREAD0_STACK_SIZE must always be defined.  Additional macros must be
  * defined depending on the value of \ref MAX_THREADS, so that there is one 
  * macro for each possible thread.
  * 
@@ -96,21 +96,21 @@
  * @{
  */
 
-/** The size of the stack for \ref THREAD0. */
+/** The size of the stack for \c THREAD0. */
 #define THREAD0_STACK_SIZE 64
-/** The size of the stack for \ref THREAD1. */
+/** The size of the stack for \c THREAD1. */
 #define THREAD1_STACK_SIZE 64
-/** The size of the stack for \ref THREAD2. */
+/** The size of the stack for \c THREAD2. */
 #define THREAD2_STACK_SIZE 64
-/** The size of the stack for \ref THREAD3. */
+/** The size of the stack for \c THREAD3. */
 #define THREAD3_STACK_SIZE 64
-/** The size of the stack for \ref THREAD4. */
+/** The size of the stack for \c THREAD4. */
 #define THREAD4_STACK_SIZE 64
-/** The size of the stack for \ref THREAD5. */
+/** The size of the stack for \c THREAD5. */
 #define THREAD5_STACK_SIZE 64
-/** The size of the stack for \ref THREAD6. */
+/** The size of the stack for \c THREAD6. */
 #define THREAD6_STACK_SIZE 64
-/** The size of the stack for \ref THREAD7. */
+/** The size of the stack for \c THREAD7. */
 #define THREAD7_STACK_SIZE 64
 
 /**

@@ -73,9 +73,7 @@
 #ifndef KERNEL_H_
 #define KERNEL_H_
 
-#include "config.h"
-#include <stdbool.h>
-#include <stdint.h>
+#include "kernel_types.h"
 
 /**
  * \defgroup kernel_interface Kernel Interface
@@ -83,41 +81,6 @@
  * 
  * @{
  */
-
-/** Defines an explicit type to use for thread id's. */
-typedef uint8_t thread_id;
-
-/** The id for the first thread. */
-#define THREAD0 0
-/** The id for the second thread. */
-#define THREAD1 1
-/** The id for the third thread. */
-#define THREAD2 2
-/** The id for the fourth thread. */
-#define THREAD3 3
-/** The id for the fifth thread. */
-#define THREAD4 4
-/** The id for the sixth thread. */
-#define THREAD5 5
-/** The id for the seventh thread. */
-#define THREAD6 6
-/** The id for the eighth thread. */
-#define THREAD7 7
-
-/**
- * The function type for threads used by the kernel.  To reduce code size and 
- * unnecessary stack usage, thread functions should be given the gcc attribute 
- * \c OS_task. While thread functions do not need to worry about saving or 
- * restoring any registers, it is not recommended to give them the \c naked 
- * attribute, because the compiler may generate code that assumes the stack has 
- * been set up by a function prologue.
- * 
- * \param[in] my_id The thread id of this thread.
- * \param[in] arg A parameter to pass information to the thread.
- * 
- * \warning Do not allow any thread to return: doing so will break things...
- */
-typedef void (*thread_ptr)(const thread_id my_id, void* arg);
 
 /**
  * Creates a new thread of operation within the kernel.
@@ -234,71 +197,8 @@ extern void kn_suspend(const thread_id t_id);
 static inline void kn_suspend_self();
 
 /**
- * Converts a bit number to a bit mask.  For example, bit 0 produces the mask 
- * 0x01.  Implemented using a lookup table for better performance than a loop 
- * with bitwise operations. Technically this function isn't part of the kernel, 
- * it's just made available since it provides a commonly used functionality.
- * 
- * \param[in] bit_num The bit number to be converted to a mask. Zero-indexed. 
- * Valid values are in the range [0,7].
- * 
- * \return The bit mask corresponding to \c bit_num.
- */
-static inline uint8_t bit_to_mask(uint8_t bit_num) __attribute__((pure));
-
-#ifdef KERNEL_USE_STACK_CANARY
-/**
- * A user supplied function that is called when a stack overflow is detected. 
- * Used only if \ref KERNEL_USE_STACK_CANARY is defined.
- * 
- * \param[in] t_id The id of the active thread when the stack overflow was 
- * detected. This does not necessarily mean that corruption is limited to this 
- * thread's stack.
- * 
- * \warning If you return from this function, the kernel scheduler will attempt 
- * to continue, but you do so at your own risk.
- */
-extern void kn_stack_overflow(const thread_id t_id);
-#endif
-
-#ifdef KERNEL_USE_ASSERT
-/**
- * If the given expression evaluates to false, calls \ref kn_assertion_failure.
- */
-#define kn_assert(expr) \
-  do { \
-    if (!(expr)) \
-      kn_assertion_failure(#expr, __FILE__, __BASE_FILE__, __LINE__); \
-  } while (0)
-    
-/**
- * A user supplied function that is called when an assertion fails. Used only 
- * if \ref KERNEL_USE_ASSERT is defined.
- * 
- * \param[in] expr The assertion expression that failed.
- * \param[in] file The name of the file where the assertion failed.
- * \param[in] base_file The file being compiled when the assertion failed.
- * \param[in] line The line number of \c file where the assertion failed.
- * 
- * \warning This function should call \c exit or otherwise be prevented from 
- * returning.
- */
-extern void kn_assertion_failure(const char* expr, const char* file,
-                                 const char* base_file, const int line);
-
-#else
-  #define kn_assert(expr) ((void)0)
-#endif
-
-/**
  * @}
  */
-
-/** \cond */
-#ifndef NULL
-  #define NULL ((void*)0)
-#endif
-/** \endcond */
 
 // inline function definitions
 #include "core/kernel-inl.h"

@@ -176,13 +176,13 @@
 #endif
 
 /**
- * Sets the starting address of the stack for \ref THREAD0.
+ * Sets the starting address of the stack for \c THREAD0.
  * \ingroup kernel_implementation
  */
 #define THREAD0_STACK_BASE STACK_CAST(RAMEND)
 #if MAX_THREADS >= 2
   /**
-   * Sets the starting address of the stack for \ref THREAD1.
+   * Sets the starting address of the stack for \c THREAD1.
    * \ingroup kernel_implementation
    */
   #define THREAD1_STACK_BASE \
@@ -190,7 +190,7 @@
 #endif
 #if MAX_THREADS >= 3
   /**
-   * Sets the starting address of the stack for \ref THREAD2.
+   * Sets the starting address of the stack for \c THREAD2.
    * \ingroup kernel_implementation
    */
   #define THREAD2_STACK_BASE \
@@ -198,7 +198,7 @@
 #endif
 #if MAX_THREADS >= 4
   /**
-   * Sets the starting address of the stack for \ref THREAD3.
+   * Sets the starting address of the stack for \c THREAD3.
    * \ingroup kernel_implementation
    */
   #define THREAD3_STACK_BASE \
@@ -206,7 +206,7 @@
 #endif
 #if MAX_THREADS >= 5
   /**
-   * Sets the starting address of the stack for \ref THREAD4.
+   * Sets the starting address of the stack for \c THREAD4.
    * \ingroup kernel_implementation
    */
   #define THREAD4_STACK_BASE \
@@ -214,7 +214,7 @@
 #endif
 #if MAX_THREADS >= 6
   /**
-   * Sets the starting address of the stack for \ref THREAD5.
+   * Sets the starting address of the stack for \c THREAD5.
    * \ingroup kernel_implementation
    */
   #define THREAD5_STACK_BASE \
@@ -222,7 +222,7 @@
 #endif
 #if MAX_THREADS >= 7
   /**
-   * Sets the starting address of the stack for \ref THREAD6.
+   * Sets the starting address of the stack for \c THREAD6.
    * \ingroup kernel_implementation
    */
   #define THREAD6_STACK_BASE \
@@ -230,7 +230,7 @@
 #endif
 #if MAX_THREADS == 8
   /**
-   * Sets the starting address of the stack for \ref THREAD7.
+   * Sets the starting address of the stack for \c THREAD7.
    * \ingroup kernel_implementation
    */
   #define THREAD7_STACK_BASE \
@@ -239,14 +239,14 @@
 
 #ifdef KERNEL_USE_STACK_CANARY
   /**
-   * Sets pointer to the stack canary for \ref THREAD0.
+   * Sets pointer to the stack canary for \c THREAD0.
    * \ingroup kernel_implementation
    */
   #define THREAD0_CANARY_LOC \
     STACK_CAST(THREAD0_STACK_BASE - THREAD0_STACK_SIZE + 1)
   #if MAX_THREADS >= 2
     /**
-     * Sets pointer to the stack canary for \ref THREAD1.
+     * Sets pointer to the stack canary for \c THREAD1.
      * \ingroup kernel_implementation
      */
     #define THREAD1_CANARY_LOC \
@@ -254,7 +254,7 @@
   #endif
   #if MAX_THREADS >= 3
     /**
-     * Sets pointer to the stack canary for \ref THREAD2.
+     * Sets pointer to the stack canary for \c THREAD2.
      * \ingroup kernel_implementation
      */
     #define THREAD2_CANARY_LOC \
@@ -262,7 +262,7 @@
   #endif
   #if MAX_THREADS >= 4
     /**
-     * Sets pointer to the stack canary for \ref THREAD3.
+     * Sets pointer to the stack canary for \c THREAD3.
      * \ingroup kernel_implementation
      */
     #define THREAD3_CANARY_LOC \
@@ -270,7 +270,7 @@
   #endif
   #if MAX_THREADS >= 5
     /**
-     * Sets pointer to the stack canary for \ref THREAD4.
+     * Sets pointer to the stack canary for \c THREAD4.
      * \ingroup kernel_implementation
      */
     #define THREAD4_CANARY_LOC \
@@ -278,7 +278,7 @@
   #endif
   #if MAX_THREADS >= 6
     /**
-     * Sets pointer to the stack canary for \ref THREAD5.
+     * Sets pointer to the stack canary for \c THREAD5.
      * \ingroup kernel_implementation
      */
     #define THREAD5_CANARY_LOC \
@@ -286,7 +286,7 @@
   #endif
   #if MAX_THREADS >= 7
     /**
-     * Sets pointer to the stack canary for \ref THREAD6.
+     * Sets pointer to the stack canary for \c THREAD6.
      * \ingroup kernel_implementation
      */
     #define THREAD6_CANARY_LOC \
@@ -294,7 +294,7 @@
   #endif
   #if MAX_THREADS == 8
     /**
-     * Sets pointer to the stack canary for \ref THREAD7.
+     * Sets pointer to the stack canary for \c THREAD7.
      * \ingroup kernel_implementation
      */
     #define THREAD7_CANARY_LOC \
